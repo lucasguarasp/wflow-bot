@@ -56,8 +56,8 @@ export class DrawFlowComponent implements OnInit {
   // Private functions
   private initDrawFlow(): void {
     if (typeof document !== 'undefined') {
-      const drawFlowHtmlElement = <HTMLElement>document.getElementById('drawflow');
-      this.editor = new Drawflow(drawFlowHtmlElement);
+      const drawFlowHtmlElement = document.getElementById('drawflow');
+      this.editor = new Drawflow(drawFlowHtmlElement as HTMLElement);
 
       this.editor.reroute = true;
       this.editor.curvature = 0.5;
