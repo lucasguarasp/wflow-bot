@@ -240,6 +240,11 @@ export class DrawFlowComponent implements OnInit {
     }
   }
 
+  export() {
+    debugger
+    const html = JSON.stringify(this.editor.export(), null,4)
+  }
+
   onClear() {
     this.editor.clear();
   }
