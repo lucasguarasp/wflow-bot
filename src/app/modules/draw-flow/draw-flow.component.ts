@@ -236,13 +236,44 @@ export class DrawFlowComponent implements OnInit {
         this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow', {}, startFlow);
         break;
 
+      case 'Anotation':
+        var Anotation = `
+        <div>
+          <div class="title-box">👏 Welcome!!</div>
+          <div class="box">
+            <p>Simple flow library <b>demo</b>
+            <a href="https://github.com/jerosoler/Drawflow" target="_blank">Drawflow</a> by <b>Jero Soler</b></p><br>
+    
+            <p>Multiple input / outputs<br>
+               Data sync nodes<br>
+               Import / export<br>
+               Modules support<br>
+               Simple use<br>
+               Type: Fixed or Edit<br>
+               Events: view console<br>
+               Pure Javascript<br>
+            </p>
+            <br>
+            <p><b><u>Shortkeys:</u></b></p>
+            <p>🎹 <b>Delete</b> for remove selected<br>
+            💠 Mouse Left Click == Move<br>
+            ❌ Mouse Right == Delete Option<br>
+            🔍 Ctrl + Wheel == Zoom<br>
+            📱 Mobile support<br>
+            ...</p>
+          </div>
+        </div>
+        `;
+        this.editor.addNode('Anotation', 0, 0, pos_x, pos_y, 'Anotation', {}, Anotation);
+        break;
+
       default:
     }
   }
 
   export() {
     debugger
-    const html = JSON.stringify(this.editor.export(), null,4)
+    const html = JSON.stringify(this.editor.export(), null, 4)
   }
 
   onClear() {
