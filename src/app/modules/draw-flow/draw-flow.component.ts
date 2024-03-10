@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Drawflow from 'drawflow';
+import { ConfirmacaoComponent } from '../../shared/components/modals/confirmacao/confirmacao.component';
+import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
 
 @Component({
   selector: 'app-draw-flow',
@@ -34,10 +37,14 @@ export class DrawFlowComponent implements OnInit {
   mobile_item_selec: string;
   mobile_last_move: TouchEvent | null;
 
-  constructor() { }
+  nodeModal: ElementRef;
+  @ViewChild('content') set setNodeModal(el: ElementRef) {
+    this.nodeModal = el;
+  }
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    // this.initDrawFlow();
   }
 
   ngAfterViewInit(): void {
@@ -67,6 +74,8 @@ export class DrawFlowComponent implements OnInit {
       this.editor.line_path = 1;
       this.editor.editor_mode = 'edit';
 
+      this.editor.useuuid = true;
+
       this.editor.start();
 
       // para tester, carrega desenho
@@ -76,7 +85,6 @@ export class DrawFlowComponent implements OnInit {
   }
 
   private addEditorEvents() {
-
     // Events!
     this.editor.on('nodeCreated', (id: any) => {
       console.log('Editor Event :>> Node created ' + id, this.editor.getNodeFromId(id));
@@ -93,27 +101,26 @@ export class DrawFlowComponent implements OnInit {
       console.log('Editor Event :>> Node selected :>> this.selectedNode :>> ', this.selectedNode.data);
     });
 
-    // this.editor.on('click', (e: any) => {
-    //   console.log('Editor Event :>> Click :>> ', e);
+    this.editor.on('click', (e: any) => {
+      console.log('Editor Event :>> Click :>> ', e);
+      if (e.target.closest('.drawflow_content_node') != null || e.target.classList[0] === 'drawflow-node') {
+        if (e.target.closest('.drawflow_content_node') != null) {
+          this.selectedNodeId = e.target.closest('.drawflow_content_node').parentElement.id;
+        } else {
+          this.selectedNodeId = e.target.id;
+        }
+        this.selectedNode = this.editor.drawflow.drawflow.Home.data[`${this.selectedNodeId.slice(5)}`];
+      }
 
-    //   if (e.target.closest('.drawflow_content_node') != null || e.target.classList[0] === 'drawflow-node') {
-    //     if (e.target.closest('.drawflow_content_node') != null) {
-    //       this.selectedNodeId = e.target.closest('.drawflow_content_node').parentElement.id;
-    //     } else {
-    //       this.selectedNodeId = e.target.id;
-    //     }
-    //     this.selectedNode = this.editor.drawflow.drawflow.Home.data[`${this.selectedNodeId.slice(5)}`];
-    //   }
+      if (e.target.closest('#editNode') != null || e.target.classList[0] === 'edit-node-button') {
+        // Open modal with Selected Node        
+        this.open(this.nodeModal, this.selectedNodeId);
+      }
 
-    //   if (e.target.closest('#editNode') != null || e.target.classList[0] === 'edit-node-button') {
-    //     // Open modal with Selected Node
-    //     // this.open(this.nodeModal, this.selectedNodeId);
-    //   }
-
-    //   if (e.target.closest('#editNode') === null) {
-    //     // this.hideEditButton();
-    //   }
-    // });
+      if (e.target.closest('#editNode') === null) {
+         this.hideEditButton();
+      }
+    });
 
     this.editor.on('moduleCreated', (name: any) => {
       console.log('Editor Event :>> Module Created ' + name);
@@ -131,20 +138,20 @@ export class DrawFlowComponent implements OnInit {
       console.log('Editor Event :>> Connection removed ', connection);
     });
 
-    // this.editor.on('contextmenu', (e: any) => {
-    //   console.log('Editor Event :>> Context Menu :>> ', e);
+    this.editor.on('contextmenu', (e: any) => {
+      console.log('Editor Event :>> Context Menu :>> ', e);
 
-    //   if (e.target.closest('.drawflow_content_node') != null || e.target.classList[0] === 'drawflow-node') {
-    //     if (e.target.closest('.drawflow_content_node') != null) {
-    //       this.selectedNodeId = e.target.closest('.drawflow_content_node').parentElement.id;
-    //     } else {
-    //       this.selectedNodeId = e.target.id;
-    //     }
-    //     this.selectedNode = this.editor.drawflow.drawflow.Home.data[`${this.selectedNodeId.slice(5)}`];
+      if (e.target.closest('.drawflow_content_node') != null || e.target.classList[0] === 'drawflow-node') {
+        if (e.target.closest('.drawflow_content_node') != null) {
+          this.selectedNodeId = e.target.closest('.drawflow_content_node').parentElement.id;
+        } else {
+          this.selectedNodeId = e.target.id;
+        }
+        this.selectedNode = this.editor.drawflow.drawflow.Home.data[`${this.selectedNodeId.slice(5)}`];
 
-    //     // this.showEditButton();
-    //   }
-    // });
+        this.showEditButton();
+      }
+    });
 
     this.editor.on('zoom', (zoom: any) => {
       console.log('Editor Event :>> Zoom level ' + zoom);
@@ -158,9 +165,9 @@ export class DrawFlowComponent implements OnInit {
       console.log('Editor Event :>> Reroute removed ' + id);
     });
 
-    this.editor.on('mouseMove', (position: any) => {
-      console.log('Editor Event :>> Position mouse x:' + position.x + ' y:' + position.y);
-    });
+    // this.editor.on('mouseMove', (position: any) => {
+    //   console.log('Editor Event :>> Position mouse x:' + position.x + ' y:' + position.y);
+    // });
 
     this.editor.on('nodeMoved', (id: any) => {
       console.log('Editor Event :>> Node moved ' + id);
@@ -171,15 +178,23 @@ export class DrawFlowComponent implements OnInit {
         'Editor Event :>> Translate x:' + position.x + ' y:' + position.y
       );
     });
+
+    this.editor.on('dblclick', (e: any) => {
+      console.log(
+        'Editor Event :>> Translate dblclick'
+      );
+    });
   }
 
   private dragEvent() {
     var elements = Array.from(document.getElementsByClassName('drag-drawflow'));
 
     elements.forEach(element => {
-      element.addEventListener('touchend', this.drop, false);
-      element.addEventListener('touchmove', this.positionMobile, false);
-      element.addEventListener('touchstart', this.drag, false);
+      // element.addEventListener('touchend', this.drop, false);
+      // element.addEventListener('touchmove', this.positionMobile, false);
+      // element.addEventListener('touchstart', this.drag, false);
+      element.addEventListener("dblclick", (event) => { });
+
     });
 
   }
@@ -201,7 +216,6 @@ export class DrawFlowComponent implements OnInit {
   }
 
   drop(ev: any) {
-    
     if (ev.type === "touchend") {
       // var parentdrawflow = document.elementFromPoint(this.mobile_last_move.touches[0].clientX, this.mobile_last_move.touches[0].clientY).closest("#drawflow");
       // if (parentdrawflow != null) {
@@ -219,11 +233,12 @@ export class DrawFlowComponent implements OnInit {
     // if (this.editor.editor_mode === 'fixed') {
     //   return false;
     // }
-    
+
     pos_x = pos_x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)));
     pos_y = pos_y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)));
 
 
+    // this.editor.addNode(name, inputs, outputs, posx, posy, class, data, html);
     switch (name) {
       case 'startFlow':
         var startFlow = `
@@ -233,7 +248,17 @@ export class DrawFlowComponent implements OnInit {
         `;
         this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow', {}, startFlow);
         break;
-
+      case 'dbclick':
+        var dbclick = `
+          <div (dblclick)="testeModal()">
+          <div class="title-box"><i class="fas fa-mouse" (dblclick)="testeModal()"></i> Db Click</div>
+            <div class="box dbclickbox" (dblclick)="testeModal()">
+              Db Click here
+            </div>
+          </div>
+          `;
+        this.editor.addNode('dbclick', 1, 1, pos_x, pos_y, 'dbclick', { name: '' }, dbclick);
+        break;
       case 'Anotation':
         var Anotation = `
         <div>
@@ -269,12 +294,11 @@ export class DrawFlowComponent implements OnInit {
     }
   }
 
-  export() {    
+  export() {
     const html = JSON.stringify(this.editor.export(), null, 4)
   }
 
   save() {
-    debugger
     const html = JSON.stringify(this.editor.export(), null, 4)
   }
 
@@ -310,6 +334,70 @@ export class DrawFlowComponent implements OnInit {
 
   onSubmit() {
     this.drawingData = this.exportDrawingData();
+  }
+
+  openModalConfig() {
+
+    const modalRef = this.modalService.open(ConfigComponentsComponent, {
+      centered: true,
+      backdrop: 'static'
+    });
+
+    // modalRef.componentInstance.confirmacao = `Deseja cancelar a cotação?`;
+    // modalRef.componentInstance.confirmarLabel = 'Sim';
+    // modalRef.componentInstance.cancelarLabel = 'Não';
+    // modalRef.result.then(result => {
+    //   if (result) {
+    //     debugger
+
+    //   }
+    // });
+  }
+
+  private hideEditButton() {
+    this.editButtonShown = false;
+    this.editDivHtml = document.getElementById('editNode')!;
+    if (this.editDivHtml) {
+      this.editDivHtml.remove();
+    }
+  }
+
+  open(content: any, nodeId: string) {
+    this.hideEditButton();
+
+    const oldNodeIdNumber = parseInt(nodeId.slice(5));
+    this.selectedNode = this.editor.drawflow.drawflow.Home.data[`${oldNodeIdNumber}`];
+    const oldNodeStringified = JSON.stringify(this.selectedNode);
+    // const { inputsCount, outputsCount } = this.countInOutputsOfNode(JSON.parse(oldNodeStringified));
+
+    this.openModalConfig()
+    // const modalRef = this.modalService.open(content, { size: 'xl', backdrop: 'static', keyboard: false });
+  }
+  private showEditButton() {
+    this.editButtonShown = true;
+    this.editDivHtml = document.createElement('div');
+    this.editDivHtml.id = 'editNode';
+    this.editDivHtml.innerHTML = '<i class="fas fa-pen" aria-hidden="true"></i>';
+    this.editDivHtml.style.display = 'block';
+    this.editDivHtml.style.position = 'absolute';
+    this.editDivHtml.className = 'edit-node-button';
+
+    this.editDivHtml.style.right = '22px';
+    this.editDivHtml.style.top = '-15px';
+    this.editDivHtml.style.width = '30px';
+    this.editDivHtml.style.height = '30px';
+    this.editDivHtml.style.borderRadius = '50%';
+    this.editDivHtml.style.textAlign = 'center';
+    this.editDivHtml.style.fontSize = 'x-small';
+
+    this.editDivHtml.style.border = '2px solid #4ea9ff';
+    this.editDivHtml.style.background=  'white';
+    this.editDivHtml.style.color = '#4ea9ff';
+    // this.editDivHtml.style.boxShadow = '0 2px 20px 2px #4ea9ff';
+    this.editDivHtml.style.lineHeight = '25px';
+
+    const selectedNodeHtml = document.getElementById(this.selectedNodeId);
+    selectedNodeHtml?.append(this.editDivHtml);
   }
 
 }

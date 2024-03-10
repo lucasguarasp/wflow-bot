@@ -1,0 +1,28 @@
+<!-- <div class="modal-content"> -->
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelar()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <!-- <div class="modal-title" id="modal-basic-title">&times;</div>
+    <button type="button" class="close" aria-label="Close" (click)="cancelar()">
+      <i class="far fa-times-circle"></i>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    <nav>
+      <app-nav-configs-modal></app-nav-configs-modal>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Geral
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">outra 1
+      </div>
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">outra 2
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelar()">Fechar</button> -->
+    <button type="button" class="btn btn-primary" (click)="confirmar()">Salvar</button>
+  </div>
+<!-- </div> -->
