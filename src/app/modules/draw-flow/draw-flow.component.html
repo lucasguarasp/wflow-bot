@@ -38,6 +38,12 @@
       <span class="material-icons-sharp">pie_chart</span> -- Sharp 
       <span class="material-icons-two-tone">pie_chart</span> --Two Tone  -->
 
+      <!-- <div *ngFor="let name of typecomponents | components">
+        <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
+          <i class="fa fa-play"></i><span> {{name}}</span>
+        </div>
+      </div> -->
+
       <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
         <i class="fa fa-play"></i><span> StartFlow</span>
       </div>
@@ -75,14 +81,10 @@
         <i class="fa fa-code-fork"></i><span> Decision</span>
       </div>
       <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="return">
-        <i class="fa fa-refresh"></i><span> Return</span>
+        <i class="fa fa-refresh"></i><span> BackToParent</span>
       </div>
       <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="anotation">
         <i class="fa fa-comment"></i><span> Anotation</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="dbclick"
-        (dblclick)="openModalConfig()">
-        <i class="fas fa-mouse"></i><span> DBClick!</span>
       </div>
 
     </div>
@@ -96,16 +98,16 @@
 
         <div class="btn-export" (click)="export()">Export</div>
         <div class="btn-import" (click)="import()">Import</div>
-        <div class="btn-lock">
+        <!-- <div class="btn-lock">
           <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; (click)=changeMode('lock');"></i>
           <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; (click)=changeMode('unlock');"
             style="display:none;"></i>
-        </div>
+        </div> -->
 
-        <!-- <div *ngIf="showLock" class="btn-lock" [ngClass]="locked ? 'locked' : ''">
+        <div class="btn-lock" [ngClass]="locked ? 'locked' : ''">
           <i (click)="changeMode()" class="fas fa-lock-open" [ngStyle]="{ display: locked ? 'none' : 'block' }"></i>
           <i (click)="changeMode()" class="fas fa-lock" [ngStyle]="{ display: locked ? 'block' : 'none' }"></i>
-        </div> -->
+        </div>
 
         <div class="bar-zoom">
           <i class="fas fa-search-minus" (click)="onZoomOut()"></i>

@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-nav-configs-modal',
-  templateUrl: './nav-configs-modal.component.html',
-  styleUrls: ['./nav-configs-modal.component.css']
+  selector: 'app-nav-tabs-config',
+  templateUrl: './nav-tabs-config.component.html',
+  styleUrls: ['./nav-tabs-config.component.css']
 })
-export class NavConfigsModalComponent implements OnInit {
+export class NavTabsConfigComponent implements OnInit {
 
   @Input() componentName: string;
 
@@ -16,6 +16,5 @@ export class NavConfigsModalComponent implements OnInit {
 
   ngOnInit() {
   }
-
 
 }

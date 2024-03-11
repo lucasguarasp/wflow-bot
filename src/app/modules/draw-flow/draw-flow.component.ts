@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Drawflow from 'drawflow';
 import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
+import { TypeComponent } from '../../shared/models/components/type-component.enum';
 
 @Component({
   selector: 'app-draw-flow',
@@ -41,14 +42,25 @@ export class DrawFlowComponent implements OnInit {
     this.nodeModal = el;
   }
 
+  components = TypeComponent;
+  typecomponents : TypeComponent;
+  classComponents: any[];
+  nameComponents: any[];
+
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.classComponents = Object.values(this.components).filter(value => typeof value === 'string');
+    this.nameComponents = Object.keys(this.components).filter(value => typeof value === 'string');
+
+
   }
 
   ngAfterViewInit(): void {
     this.initDrawingBoard();
-    // this.editor.editor_mode = this.locked != null && this.locked == false ? 'edit' : 'fixed';
+    debugger
+    this.editor.editor_mode = this.locked != null && this.locked ? 'fixed' : 'edit';
   }
 
   private initDrawingBoard() {
@@ -113,7 +125,6 @@ export class DrawFlowComponent implements OnInit {
 
       if (e.target.closest('#editNode') != null || e.target.classList[0] === 'edit-node-button') {
         // Open modal with Selected Node   
-        debugger
         this.open(this.nodeModal, this.selectedNodeId);
       }
 
@@ -320,6 +331,7 @@ export class DrawFlowComponent implements OnInit {
   }
 
   changeMode() {
+    debugger
     this.locked = !this.locked;
     this.editor.editor_mode = this.locked != null && this.locked == false ? 'edit' : 'fixed';
   }
@@ -350,7 +362,7 @@ export class DrawFlowComponent implements OnInit {
       centered: true,
       backdrop: 'static'
     });
-    debugger
+
     this.selectedNodeId;
     modalRef.componentInstance.itemSelected = this.selectedNode;
     // modalRef.componentInstance.confirmarLabel = 'Sim';

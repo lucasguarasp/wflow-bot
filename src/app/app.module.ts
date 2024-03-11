@@ -5,16 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DrawFlowModule } from './modules/draw-flow/draw-flow.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, 
     AppRoutingModule,
     SharedModule.forRoot(),
-    NgbModule
+    DrawFlowModule
   ],
   providers: [],
   bootstrap: [AppComponent]
