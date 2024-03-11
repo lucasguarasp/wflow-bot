@@ -16,19 +16,19 @@ export enum TypeComponent {
 }
 
 export const icon = new Map<TypeComponent, string>([
-    [TypeComponent.StartFlow, 'fa fa-play'],
-    [TypeComponent.SubFlow, 'fa fa-play-circle'],
+    [TypeComponent.StartFlow, '	fa fa-home'],
+    [TypeComponent.SubFlow, 'fa fa-play'],
     [TypeComponent.EndFlow, 'fa fa-circle'],
     [TypeComponent.GoToStep, 'fa fa-flag'],
-    [TypeComponent.GoToFlow, 'fab fa-telegram'],
-    [TypeComponent.Request, 'fas fa-file-signature'],
-    [TypeComponent.Response, 'fab fa-google-drive'],
+    [TypeComponent.GoToFlow, 'fa fa-mail-forward'],
+    [TypeComponent.Request, 'fa fa-envelope'],
+    [TypeComponent.Response, 'fa fa-envelope-open'],
     [TypeComponent.Mapper, 'fas fa-code'],
     [TypeComponent.Filter, 'fa fa-filter'],
-    [TypeComponent.CallApi, 'fas fa-code-branch'],
+    [TypeComponent.CallApi, 'fa fa-globe'],
     [TypeComponent.File, 'fa fa-file'],
     [TypeComponent.Decision, 'fa fa-code-fork'],
-    [TypeComponent.BackToParent, 'fa fa-refresh'],
+    [TypeComponent.BackToParent, 'fa fa-reply'],
     [TypeComponent.Anotation, 'fa fa-comment']
   ]);
   

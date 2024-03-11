@@ -272,17 +272,6 @@ export class DrawFlowComponent implements OnInit {
         `;
         this.editor.addNode('endFlow', 1, 0, pos_x, pos_y, 'endFlow', { data: {} }, endFlow);
         break;
-      case 'dbclick':
-        var dbclick = `
-          <div (dblclick)="testeModal()">
-          <div class="title-box"><i class="fas fa-mouse" (dblclick)="testeModal()"></i> No name</div>
-            <div class="box dbclickbox" (dblclick)="testeModal()">
-              Db Click here
-            </div>
-          </div>
-          `;
-        this.editor.addNode('noName', 1, 1, pos_x, pos_y, 'noName', { name: '' }, dbclick);
-        break;
       case 'Anotation':
         var Anotation = `
         <div>
@@ -313,10 +302,11 @@ export class DrawFlowComponent implements OnInit {
         `;
         this.editor.addNode('Anotation', 0, 0, pos_x, pos_y, 'Anotation', {}, Anotation);
         break;
-
       default:
-        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
-        this.editor.addNode(name, 0, 0, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
+        if (name) {
+          html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
+          this.editor.addNode(name, 0, 0, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
+        }
     }
 
     return true;
