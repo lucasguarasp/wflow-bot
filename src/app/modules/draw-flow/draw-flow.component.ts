@@ -247,17 +247,17 @@ export class DrawFlowComponent implements OnInit {
     }
   }
 
-  private addNodeToDrawFlow(name: string, pos_x: number, pos_y: number) {
-    // if (this.editor.editor_mode === 'fixed') {
-    //   return false;
-    // }
+  private addNodeToDrawFlow(name: string, pos_x: number, pos_y: number): false | true {
+    if (this.editor.editor_mode === 'fixed') {
+      return false;
+    }
 
     pos_x = pos_x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)));
     pos_y = pos_y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)));
 
     var keyFromName = this.getKeyByValue(name, TypeComponent);
     let html = '';
-    
+
     // this.editor.addNode(name, inputs, outputs, posx, posy, class, data, html);
     switch (name) {
       case 'startFlow':
@@ -318,9 +318,12 @@ export class DrawFlowComponent implements OnInit {
         html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
         this.editor.addNode(name, 0, 0, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
     }
+
+    return true;
   }
 
   export() {
+    debugger
     const html = JSON.stringify(this.editor.export(), null, 4)
   }
 
