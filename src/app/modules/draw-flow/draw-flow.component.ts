@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Drawflow from 'drawflow';
-import { ConfirmacaoComponent } from '../../shared/components/modals/confirmacao/confirmacao.component';
 import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
 
 @Component({

@@ -31,7 +31,7 @@ export class ConfigComponentsComponent implements OnInit {
 
   addInput() {
     this.inputList = document.getElementById('inputList')!;
-    this.inputList.innerHTML += '<input class="form-control form-control-sm" type="text" placeholder="Insert input here">';
+    this.inputList.innerHTML += '<input class="form-control form-control-sm mb-2" type="text" placeholder="Insert input here">';
 
   }
 

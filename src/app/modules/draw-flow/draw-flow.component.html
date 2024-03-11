@@ -88,6 +88,12 @@
           <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; changeMode('lock');"></i>
           <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; changeMode('unlock');" style="display:none;"></i>
         </div>
+
+        <!-- <div *ngIf="showLock" class="btn-lock" [ngClass]="locked ? 'locked' : ''">
+          <i (click)="changeMode()" class="fas fa-lock-open" [ngStyle]="{ display: locked ? 'none' : 'block' }"></i>
+          <i (click)="changeMode()" class="fas fa-lock" [ngStyle]="{ display: locked ? 'block' : 'none' }"></i>
+        </div> -->
+
         <div class="bar-zoom">
           <i class="fas fa-search-minus" (click)="onZoomOut()"></i>
           <i class="fas fa-search" (click)="onZoomReset()"></i>

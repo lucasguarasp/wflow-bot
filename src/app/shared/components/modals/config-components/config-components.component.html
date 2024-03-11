@@ -19,6 +19,23 @@
         </div>
       </form>
 
+      <ul class="nav nav-tabs justify-content-end pt-2 mb-1" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-bs-toggle="collapse" href="#inputs" role="tab" aria-expanded="false">
+            Input
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" role="tabpanel">
+          <div class="collapse" id="inputs">
+            <button type="button" class="btn btn-primary" (click)="addInput()"><i class="fa fa-plus" aria-hidden="true"></i>
+              Add input</button>
+            <div class="card card-body" id="inputList">
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
     <div class="tab-pane fade" id="nav-profile">
@@ -28,30 +45,6 @@
       outra 2
     </div>
   </div>
-
-  <ul class="nav nav-tabs justify-content-end" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" data-bs-toggle="collapse" href="#inputs" role="tab" aria-expanded="false">
-        Input
-      </a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div class="tab-pane fade show active" role="tabpanel">
-      <div class="collapse" id="inputs">
-        <button type="button" class="btn btn-primary" (click)="addInput()"><i class="fa fa-plus" aria-hidden="true"></i> Add input</button>
-
-        <div class="card card-body" id="inputList">
-        
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
-
 
 </div>
 <div class="modal-footer">
