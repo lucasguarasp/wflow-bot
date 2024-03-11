@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Drawflow from 'drawflow';
 import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
-import { TypeComponent } from '../../shared/models/components/type-component.enum';
+import { TypeComponent, icon } from '../../shared/models/components/type-component.enum';
 
 @Component({
   selector: 'app-draw-flow',
@@ -43,24 +43,31 @@ export class DrawFlowComponent implements OnInit {
   }
 
   components = TypeComponent;
-  typecomponents : TypeComponent;
-  classComponents: any[];
-  nameComponents: any[];
+  // classComponents: any[];
+  // nameComponents: any[];
 
+  getIconClass(type: TypeComponent): string {
+    return icon.get(type) || 'fa fa-pencil'; // Pode definir uma classe padrão se não houver correspondência
+  }
 
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.classComponents = Object.values(this.components).filter(value => typeof value === 'string');
-    this.nameComponents = Object.keys(this.components).filter(value => typeof value === 'string');
-
-
+    // this.classComponents = Object.values(this.components).filter(value => typeof value === 'string');
+    // this.nameComponents = Object.keys(this.components).filter(value => typeof value === 'string');
   }
 
   ngAfterViewInit(): void {
     this.initDrawingBoard();
     debugger
     this.editor.editor_mode = this.locked != null && this.locked ? 'fixed' : 'edit';
+  }
+
+
+
+  private getKeyByValue(value: string, enumObject: any): string | null {
+    const keys = Object.keys(enumObject).filter(key => enumObject[key] === value);
+    return keys.length > 0 ? keys[0] : null;
   }
 
   private initDrawingBoard() {
@@ -248,16 +255,14 @@ export class DrawFlowComponent implements OnInit {
     pos_x = pos_x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)));
     pos_y = pos_y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)));
 
-
+    var keyFromName = this.getKeyByValue(name, TypeComponent);
+    let html = '';
+    
     // this.editor.addNode(name, inputs, outputs, posx, posy, class, data, html);
     switch (name) {
       case 'startFlow':
-        var startFlow = `
-        <div>
-          <div class="title-box"><i class="fa fa-play"></i> StartFlow</div>
-        </div>
-        `;
-        this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow', { nameOut: '__sessionData__', data: {} }, startFlow);
+        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
+        this.editor.addNode(name, 0, 1, pos_x, pos_y, name, { nameOut: '__sessionData__', data: {} }, html);
         break;
       case 'endFlow':
         var endFlow = `
@@ -310,6 +315,8 @@ export class DrawFlowComponent implements OnInit {
         break;
 
       default:
+        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
+        this.editor.addNode(name, 0, 0, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
     }
   }
 

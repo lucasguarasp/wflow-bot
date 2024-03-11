@@ -38,13 +38,19 @@
       <span class="material-icons-sharp">pie_chart</span> -- Sharp 
       <span class="material-icons-two-tone">pie_chart</span> --Two Tone  -->
 
-      <!-- <div *ngFor="let name of typecomponents | components">
-        <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
-          <i class="fa fa-play"></i><span> {{name}}</span>
+      <!-- <div *ngFor="let name of components | keyvalue">
+        <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" [data-node]="name.value">
+          <i class="fa fa-play"></i><span> {{name.key}}</span>
         </div>
       </div> -->
 
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
+      <div *ngFor="let name of components | keyvalue">
+        <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" [attr.data-node]="name.value">
+          <i [ngClass]="getIconClass(name.value)"></i><span> {{name.key}}</span>
+        </div>
+      </div>
+
+      <!-- <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
         <i class="fa fa-play"></i><span> StartFlow</span>
       </div>
       <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="subFlow">
@@ -85,7 +91,7 @@
       </div>
       <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="anotation">
         <i class="fa fa-comment"></i><span> Anotation</span>
-      </div>
+      </div> -->
 
     </div>
     <div class="col-right">

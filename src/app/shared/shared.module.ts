@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValuePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmacaoComponent } from './components/modals/confirmacao/confirmacao.component';
@@ -16,13 +16,14 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserModule
   ],
   declarations: [ConfirmacaoComponent],
-  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule]
+  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule, KeyValuePipe]
 })
 export class SharedModule {
   static forRoot() {
     return {
       ngModule: SharedModule,
-      providers: []
+      providers: [        
+      ]
     }
   }
 }
