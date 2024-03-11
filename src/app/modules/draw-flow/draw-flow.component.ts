@@ -74,7 +74,7 @@ export class DrawFlowComponent implements OnInit {
       this.editor.line_path = 1;
       this.editor.editor_mode = 'edit';
 
-      this.editor.useuuid = true;
+      // this.editor.useuuid = true;
 
       this.editor.start();
 
@@ -113,12 +113,13 @@ export class DrawFlowComponent implements OnInit {
       }
 
       if (e.target.closest('#editNode') != null || e.target.classList[0] === 'edit-node-button') {
-        // Open modal with Selected Node        
+        // Open modal with Selected Node   
+        debugger     
         this.open(this.nodeModal, this.selectedNodeId);
       }
 
       if (e.target.closest('#editNode') === null) {
-         this.hideEditButton();
+        this.hideEditButton();
       }
     });
 
@@ -246,18 +247,18 @@ export class DrawFlowComponent implements OnInit {
           <div class="title-box"><i class="fa fa-play"></i> StartFlow</div>
         </div>
         `;
-        this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow', {}, startFlow);
+        this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow',  { nameOut: '__sessionData__', data : {}}, startFlow);
         break;
       case 'dbclick':
         var dbclick = `
           <div (dblclick)="testeModal()">
-          <div class="title-box"><i class="fas fa-mouse" (dblclick)="testeModal()"></i> Db Click</div>
+          <div class="title-box"><i class="fas fa-mouse" (dblclick)="testeModal()"></i> No name</div>
             <div class="box dbclickbox" (dblclick)="testeModal()">
               Db Click here
             </div>
           </div>
           `;
-        this.editor.addNode('dbclick', 1, 1, pos_x, pos_y, 'dbclick', { name: '' }, dbclick);
+        this.editor.addNode('noName', 1, 1, pos_x, pos_y, 'noName', { name: '' }, dbclick);
         break;
       case 'Anotation':
         var Anotation = `
@@ -342,8 +343,9 @@ export class DrawFlowComponent implements OnInit {
       centered: true,
       backdrop: 'static'
     });
-
-    // modalRef.componentInstance.confirmacao = `Deseja cancelar a cotação?`;
+    debugger
+    this.selectedNodeId;
+    modalRef.componentInstance.itemSelected = this.selectedNode;
     // modalRef.componentInstance.confirmarLabel = 'Sim';
     // modalRef.componentInstance.cancelarLabel = 'Não';
     // modalRef.result.then(result => {
@@ -391,7 +393,7 @@ export class DrawFlowComponent implements OnInit {
     this.editDivHtml.style.fontSize = 'x-small';
 
     this.editDivHtml.style.border = '2px solid #4ea9ff';
-    this.editDivHtml.style.background=  'white';
+    this.editDivHtml.style.background = 'white';
     this.editDivHtml.style.color = '#4ea9ff';
     // this.editDivHtml.style.boxShadow = '0 2px 20px 2px #4ea9ff';
     this.editDivHtml.style.lineHeight = '25px';

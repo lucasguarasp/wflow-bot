@@ -1,28 +1,60 @@
-<!-- <div class="modal-content"> -->
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelar()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <!-- <div class="modal-title" id="modal-basic-title">&times;</div>
-    <button type="button" class="close" aria-label="Close" (click)="cancelar()">
-      <i class="far fa-times-circle"></i>
-    </button> -->
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <app-nav-configs-modal></app-nav-configs-modal>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-geral">
+      <form>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" placeholder="Enter component name">
+          <!-- <small id="emailHelp" class="form-text text-muted">component name</small> -->
+        </div>
+        <div class="form-group">
+          <label for="nameOut">Name out</label>
+          <input type="text" class="form-control" placeholder="Enter component output name">
+        </div>
+      </form>
+
+
+    </div>
+    <div class="tab-pane fade" id="nav-profile">
+      outra 1
+    </div>
+    <div class="tab-pane fade" id="nav-contact">
+      outra 2
+    </div>
   </div>
-  <div class="modal-body">
-    <nav>
-      <app-nav-configs-modal></app-nav-configs-modal>
-    </nav>
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Geral
-      </div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">outra 1
-      </div>
-      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">outra 2
+
+  <ul class="nav nav-tabs justify-content-end" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" data-bs-toggle="collapse" href="#inputs" role="tab" aria-expanded="false">
+        Input
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" role="tabpanel">
+      <div class="collapse" id="inputs">
+        <button type="button" class="btn btn-primary" (click)="addInput()"><i class="fa fa-plus" aria-hidden="true"></i> Add input</button>
+
+        <div class="card card-body" id="inputList">
+        
+        </div>
       </div>
     </div>
   </div>
-  <div class="modal-footer">
-    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelar()">Fechar</button> -->
-    <button type="button" class="btn btn-primary" (click)="confirmar()">Salvar</button>
-  </div>
-<!-- </div> -->
+
+
+
+
+
+
+</div>
+<div class="modal-footer">
+  <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelar()">Fechar</button> -->
+  <button type="button" class="btn btn-primary" (click)="confirmar()">Salvar</button>
+</div>

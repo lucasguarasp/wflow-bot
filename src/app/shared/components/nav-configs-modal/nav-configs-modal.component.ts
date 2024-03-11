@@ -17,8 +17,5 @@ export class NavConfigsModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  onChangeTab(){
-    
-  }
 
 }
