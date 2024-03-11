@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Drawflow | Simple Flow program libray</title>
-  <meta name="description" content="Simple library for flow programming. Drawflow allows you to create data flows easily and quickly.">
+  <meta name="description"
+    content="Simple library for flow programming. Drawflow allows you to create data flows easily and quickly.">
 </head>
+
 <body>
   <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script> -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.48/dist/drawflow.min.css"> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
   <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
   <!-- <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script> -->
@@ -20,56 +24,57 @@
   <header>
     <h2>Drawflow</h2>
     <!-- <div class="github-link"><a href="https://github.com/jerosoler/Drawflow" target="_blank"> <i class="fas fa-save fa-3x"></i></a></div> -->
-    <!-- <div class="them-edit-link"><a href="https://jerosoler.github.io/drawflow-theme-generator/" target="_blank">🎨</a></div> -->  
+    <!-- <div class="them-edit-link"><a href="https://jerosoler.github.io/drawflow-theme-generator/" target="_blank">🎨</a></div> -->
 
     <!-- <div class="them-edit-link"><div class="btn-export" (click)="openModalConfig()">Modal</div></div> -->
 
   </header>
   <div class="wrapper">
     <div class="col">
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow" >
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
         <i class="fa fa-play"></i><span> StartFlow</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="SubFlow">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="subFlow">
         <i class="fa fa-play-circle"></i><span> SubFlow</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="EndFlow">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="endFlow">
         <i class="fa fa-circle"></i><span> EndFlow</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="GoToFlow">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="goToFlow">
         <i class="fab fa-telegram"></i><span> GoToFlow</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="GoToStep">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="goToStep">
         <i class="fa fa-flag"></i><span> GoToStep</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Request">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="request">
         <i class="fas fa-file-signature"></i><span> Request</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Response">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="response">
         <i class="fab fa-google-drive"></i><span> Response</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Mapper">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="mapper">
         <i class="fas fa-code"></i><span> Mapper</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Filter">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="filter">
         <i class="fa fa-filter"></i><span> Filter</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="CallApi">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="callApi">
         <i class="fas fa-code-branch"></i><span> CallApi</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="File">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="file">
         <i class="fa fa-file"></i><span> File</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Decision">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="decision">
         <i class="fa fa-code-fork"></i><span> Decision</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Return">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="return">
         <i class="fa fa-refresh"></i><span> Return</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="Anotation">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="anotation">
         <i class="fa fa-comment"></i><span> Anotation</span>
       </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="dbclick" (dblclick)="openModalConfig()">
+      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="dbclick"
+        (dblclick)="openModalConfig()">
         <i class="fas fa-mouse"></i><span> DBClick!</span>
       </div>
 
@@ -85,8 +90,9 @@
         <div class="btn-export" (click)="export()">Export</div>
         <div class="btn-import" (click)="import()">Import</div>
         <div class="btn-lock">
-          <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; changeMode('lock');"></i>
-          <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; changeMode('unlock');" style="display:none;"></i>
+          <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; (click)=changeMode('lock');"></i>
+          <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; (click)=changeMode('unlock');"
+            style="display:none;"></i>
         </div>
 
         <!-- <div *ngIf="showLock" class="btn-lock" [ngClass]="locked ? 'locked' : ''">
@@ -103,4 +109,5 @@
     </div>
   </div>
 </body>
+
 </html>

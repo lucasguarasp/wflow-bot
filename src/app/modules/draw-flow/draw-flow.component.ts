@@ -113,7 +113,7 @@ export class DrawFlowComponent implements OnInit {
 
       if (e.target.closest('#editNode') != null || e.target.classList[0] === 'edit-node-button') {
         // Open modal with Selected Node   
-        debugger     
+        debugger
         this.open(this.nodeModal, this.selectedNodeId);
       }
 
@@ -246,7 +246,15 @@ export class DrawFlowComponent implements OnInit {
           <div class="title-box"><i class="fa fa-play"></i> StartFlow</div>
         </div>
         `;
-        this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow',  { nameOut: '__sessionData__', data : {}}, startFlow);
+        this.editor.addNode('startFlow', 0, 1, pos_x, pos_y, 'startFlow', { nameOut: '__sessionData__', data: {} }, startFlow);
+        break;
+      case 'endFlow':
+        var endFlow = `
+        <div>
+          <div class="title-box"><i class="fa fa-circle"></i> endFlow</div>
+        </div>
+        `;
+        this.editor.addNode('endFlow', 1, 0, pos_x, pos_y, 'endFlow', { data: {} }, endFlow);
         break;
       case 'dbclick':
         var dbclick = `
