@@ -46,13 +46,18 @@ export class ConfigComponentsComponent implements OnInit {
       name: this.itemSelected.name,
       nameOut: JSON.stringify(this.itemSelected.data)
     });
+
+    if (this.itemSelected.class === this.components.StartFlow) {
+      this.formGeral.disable()
+    }
   }
 
   public confirmar() {
     const controleName = this.formGeral.get('name') as AbstractControl<string> | null;
-debugger
+    
     if (controleName) {
       this.itemSelected.name = controleName.value;
+      debugger
     }
 
     this.sharedDataService.updateSelectedItem(this.itemSelected);

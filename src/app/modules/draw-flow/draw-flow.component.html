@@ -11,14 +11,10 @@
 </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script> -->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow@0.0.48/dist/drawflow.min.css"> -->
+  <!-- <script src="https://cdn.jsdelivr.net/gh/jerosoler/Drawflow/dist/drawflow.min.js"></script> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
     integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
-  <!-- <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script> -->
+
 
 
   <header>
@@ -35,63 +31,14 @@
       <span class="material-icons-outlined">pie_chart</span> --Outlined
       <span class="material-icons-round">pie_chart</span> Round 
       <span class="material-icons-sharp">pie_chart</span> -- Sharp 
-      <span class="material-icons-two-tone">pie_chart</span> --Two Tone  -->
-
-      <!-- <div *ngFor="let name of components | keyvalue">
-        <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" [data-node]="name.value">
-          <i class="fa fa-play"></i><span> {{name.key}}</span>
-        </div>
-      </div> -->
+      <span class="material-icons-two-tone">pie_chart</span> --Two Tone  -->    
 
       <div *ngFor="let name of components | keyvalue">
         <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" [attr.data-node]="name.value">
           <i [ngClass]="getIconClass(name.value)"></i><span> {{name.key}}</span>
         </div>
       </div>
-
-      <!-- <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="startFlow">
-        <i class="fa fa-play"></i><span> StartFlow</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="subFlow">
-        <i class="fa fa-play-circle"></i><span> SubFlow</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="endFlow">
-        <i class="fa fa-circle"></i><span> EndFlow</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="goToFlow">
-        <i class="fab fa-telegram"></i><span> GoToFlow</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="goToStep">
-        <i class="fa fa-flag"></i><span> GoToStep</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="request">
-        <i class="fas fa-file-signature"></i><span> Request</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="response">
-        <i class="fab fa-google-drive"></i><span> Response</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="mapper">
-        <i class="fas fa-code"></i><span> Mapper</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="filter">
-        <i class="fa fa-filter"></i><span> Filter</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="callApi">
-        <i class="fas fa-code-branch"></i><span> CallApi</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="file">
-        <i class="fa fa-file"></i><span> File</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="decision">
-        <i class="fa fa-code-fork"></i><span> Decision</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="return">
-        <i class="fa fa-refresh"></i><span> BackToParent</span>
-      </div>
-      <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" data-node="anotation">
-        <i class="fa fa-comment"></i><span> Anotation</span>
-      </div> -->
-
+      
     </div>
     <div class="col-right">
       <div class="menu">
@@ -103,11 +50,6 @@
 
         <div class="btn-export" (click)="export()">Export</div>
         <div class="btn-import" (click)="import()">Import</div>
-        <!-- <div class="btn-lock">
-          <i id="lock" class="fas fa-lock" onclick="editor.editor_mode='fixed'; (click)=changeMode('lock');"></i>
-          <i id="unlock" class="fas fa-lock-open" onclick="editor.editor_mode='edit'; (click)=changeMode('unlock');"
-            style="display:none;"></i>
-        </div> -->
 
         <div class="btn-lock" [ngClass]="locked ? 'locked' : ''">
           <i (click)="changeMode()" class="fas fa-lock-open" [ngStyle]="{ display: locked ? 'none' : 'block' }"></i>
