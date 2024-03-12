@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TypeComponent } from '../../../../models/components/type-component.enum';
+import { ComponentItem } from '../../../../models/components/component-item';
 
 @Component({
   selector: 'app-nav-tabs-config',
@@ -9,6 +11,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class NavTabsConfigComponent implements OnInit {
 
   @Input() componentName: string;
+  @Input() itemSelected: ComponentItem;
+
+  components = TypeComponent;
 
   constructor(public activeModal: NgbActiveModal) {
 

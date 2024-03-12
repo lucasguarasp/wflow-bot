@@ -1,13 +1,15 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Drawflow from 'drawflow';
 import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
 import { TypeComponent, icon } from '../../shared/models/components/type-component.enum';
+import { SharedDataService } from '../../shared/providers/sharedData.service';
 
 @Component({
   selector: 'app-draw-flow',
   templateUrl: './draw-flow.component.html',
-  styleUrls: ['./draw-flow.component.css']
+  styleUrls: ['./draw-flow.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DrawFlowComponent implements OnInit {
 
@@ -38,10 +40,8 @@ export class DrawFlowComponent implements OnInit {
   mobile_last_move: TouchEvent | null;
 
   nodeModal: ElementRef;
-  @ViewChild('content') set setNodeModal(el: ElementRef) {
-    this.nodeModal = el;
-  }
 
+  @ViewChild('minhaDiv') minhaDiv: ElementRef;
   components = TypeComponent;
   // classComponents: any[];
   // nameComponents: any[];
@@ -50,7 +50,12 @@ export class DrawFlowComponent implements OnInit {
     return icon.get(type) || 'fa fa-pencil'; // Pode definir uma classe padrão se não houver correspondência
   }
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private sharedDataService: SharedDataService) {
+    this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
+      const id = parseInt(this.selectedNodeId.slice(5));
+      this.editor.drawflow.drawflow.Home.data[`${id}`] = item
+    });
+  }
 
   ngOnInit() {
     // this.classComponents = Object.values(this.components).filter(value => typeof value === 'string');
@@ -255,14 +260,15 @@ export class DrawFlowComponent implements OnInit {
     pos_x = pos_x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().x * (this.editor.precanvas.clientWidth / (this.editor.precanvas.clientWidth * this.editor.zoom)));
     pos_y = pos_y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)) - (this.editor.precanvas.getBoundingClientRect().y * (this.editor.precanvas.clientHeight / (this.editor.precanvas.clientHeight * this.editor.zoom)));
 
-    var keyFromName = this.getKeyByValue(name, TypeComponent);
+    var keyFromName = this.getKeyByValue(name, TypeComponent)?.toString();
     let html = '';
 
     // this.editor.addNode(name, inputs, outputs, posx, posy, class, data, html);
+    debugger
     switch (name) {
       case 'startFlow':
-        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
-        this.editor.addNode(name, 0, 1, pos_x, pos_y, name, { nameOut: '__sessionData__', data: {} }, html);
+        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
+        this.editor.addNode(name, 0, 1, pos_x, pos_y, name, { __sessionData__: {} }, html);
         break;
       case 'endFlow':
         var endFlow = `
@@ -304,7 +310,7 @@ export class DrawFlowComponent implements OnInit {
         break;
       default:
         if (name) {
-          html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> ${keyFromName}</div>`;
+          html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
           this.editor.addNode(name, 0, 0, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
         }
     }
@@ -356,23 +362,36 @@ export class DrawFlowComponent implements OnInit {
     this.drawingData = this.exportDrawingData();
   }
 
-  openModalConfig() {
+  private openModalConfig() {
 
     const modalRef = this.modalService.open(ConfigComponentsComponent, {
       centered: true,
       backdrop: 'static'
     });
 
-    this.selectedNodeId;
     modalRef.componentInstance.itemSelected = this.selectedNode;
-    // modalRef.componentInstance.confirmarLabel = 'Sim';
-    // modalRef.componentInstance.cancelarLabel = 'Não';
-    // modalRef.result.then(result => {
-    //   if (result) {
-    //     debugger
+    let typeComponentSelected = this.selectedNode.class;
 
-    //   }
-    // });
+    modalRef.componentInstance.confirmarLabel = 'Sim';
+    modalRef.componentInstance.cancelarLabel = 'Não';
+    modalRef.result.then(result => {
+      if (result) {
+        this.updateNameComponentHtml(typeComponentSelected, result.name);
+
+      }
+    });
+  }
+
+  private updateNameComponentHtml(typeComponentSelected: string, name: string) {
+    const elements = document.getElementsByClassName('drawflow-node ' + typeComponentSelected + ' selected');
+    if (elements.length > 0) {
+      const divElement = elements[0] as HTMLElement;
+      const spanElement = divElement.querySelector('span');
+
+      if (spanElement) {
+        spanElement.innerText = name;
+      }
+    }
   }
 
   private hideEditButton() {
@@ -385,10 +404,6 @@ export class DrawFlowComponent implements OnInit {
 
   open(content: any, nodeId: string) {
     this.hideEditButton();
-
-    const oldNodeIdNumber = parseInt(nodeId.slice(5));
-    this.selectedNode = this.editor.drawflow.drawflow.Home.data[`${oldNodeIdNumber}`];
-    const oldNodeStringified = JSON.stringify(this.selectedNode);
     // const { inputsCount, outputsCount } = this.countInOutputsOfNode(JSON.parse(oldNodeStringified));
 
     this.openModalConfig()

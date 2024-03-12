@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DrawFlowModule } from './modules/draw-flow/draw-flow.module';
+import { ConfigComponentsModule } from './shared/components/modals/config-components/config-components.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { DrawFlowModule } from './modules/draw-flow/draw-flow.module';
     BrowserModule, 
     AppRoutingModule,
     SharedModule.forRoot(),
-    DrawFlowModule
+    DrawFlowModule,
+    ConfigComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

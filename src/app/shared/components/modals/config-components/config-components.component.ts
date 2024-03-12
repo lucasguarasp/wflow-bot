@@ -1,5 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TypeComponent } from '../../../models/components/type-component.enum';
+import { ComponentItem } from '../../../models/components/component-item';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { SharedDataService } from '../../../providers/sharedData.service';
 
 @Component({
   selector: 'app-config-components',
@@ -8,21 +12,52 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ConfigComponentsComponent implements OnInit {
 
-  @Input() itemSelected: any;
+  @Input() itemSelected: ComponentItem
   inputList: HTMLElement;
+  @Output() itemOut = new EventEmitter<FormGroup>();
 
-  showName: boolean = true;
+  components = TypeComponent;
+  public formGeral: FormGroup;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private sharedDataService: SharedDataService) {
+    this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
+      this.itemSelected = item;
+    });
+  }
 
   ngOnInit() {
     debugger
-    this.itemSelected;
-    this.showName = this.itemSelected.class === "startFlow";
+    this.itemSelected = new ComponentItem(this.itemSelected);
+    this.buildForms();
+  }
+
+  buildForms() {
+    this.formGeral = this.fb.group({
+      name: [''],
+      nameOut: [''],
+    });
+
+    this.fillFormGeral();
+  }
+
+  fillFormGeral() {
+    debugger
+    this.formGeral.patchValue({
+      name: this.itemSelected.name,
+      nameOut: JSON.stringify(this.itemSelected.data)
+    });
   }
 
   public confirmar() {
-    this.activeModal.close(true);
+    const controleName = this.formGeral.get('name') as AbstractControl<string> | null;
+debugger
+    if (controleName) {
+      this.itemSelected.name = controleName.value;
+    }
+
+    this.sharedDataService.updateSelectedItem(this.itemSelected);
+    this.activeModal.close(this.itemSelected);
+
   }
 
   public cancelar() {
@@ -32,7 +67,6 @@ export class ConfigComponentsComponent implements OnInit {
   addInput() {
     this.inputList = document.getElementById('inputList')!;
     this.inputList.innerHTML += '<input class="form-control form-control-sm mb-2" type="text" placeholder="Insert input here">';
-
   }
 
 }
