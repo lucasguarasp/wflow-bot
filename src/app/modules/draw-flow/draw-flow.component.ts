@@ -52,7 +52,7 @@ export class DrawFlowComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private sharedDataService: SharedDataService) {
 
-    this.sharedDataService.getSelectedItemObservable().subscribe((item) => {      
+    this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
       if (this.selectedNodeId) {
         const id = parseInt(this.selectedNodeId.slice(5));
         this.editor.drawflow.drawflow.Home.data[`${id}`] = item
@@ -71,7 +71,19 @@ export class DrawFlowComponent implements OnInit {
     this.editor.editor_mode = this.locked != null && this.locked ? 'fixed' : 'edit';
   }
 
+  addNodeInput() {
+    this.editor.addNodeInput(this.selectedNodeId.slice(5));
+  }
 
+  addNodeOut() {
+    this.editor.addNodeOutput(this.selectedNodeId.slice(5));
+  }
+
+  teste(){
+    debugger
+    // da pra usar pra validar se já possui mais de 1 item com mesmo nome, retorna um array
+   var teste= this.editor.getNodesFromName(this.selectedNode.name);
+  }
 
   private getKeyByValue(value: string, enumObject: any): string | null {
     const keys = Object.keys(enumObject).filter(key => enumObject[key] === value);
@@ -212,11 +224,11 @@ export class DrawFlowComponent implements OnInit {
     });
 
     this.editor.container.addEventListener('dblclick', (e: any) => {
-      if(e.target.closest(".drawflow_content_node")?.parentElement) {
-          // alert(e.target.closest(".drawflow_content_node").parentElement.id);
-          this.openModalConfig();
+      if (e.target.closest(".drawflow_content_node")?.parentElement) {
+        // alert(e.target.closest(".drawflow_content_node").parentElement.id);
+        this.openModalConfig();
       }
-  });
+    });
   }
 
   private dragEvent() {
