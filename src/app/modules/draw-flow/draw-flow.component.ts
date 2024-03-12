@@ -210,6 +210,13 @@ export class DrawFlowComponent implements OnInit {
         'Editor Event :>> Translate dblclick'
       );
     });
+
+    this.editor.container.addEventListener('dblclick', (e: any) => {
+      if(e.target.closest(".drawflow_content_node")?.parentElement) {
+          // alert(e.target.closest(".drawflow_content_node").parentElement.id);
+          this.openModalConfig();
+      }
+  });
   }
 
   private dragEvent() {
