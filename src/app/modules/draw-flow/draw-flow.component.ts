@@ -51,10 +51,12 @@ export class DrawFlowComponent implements OnInit {
   }
 
   constructor(private modalService: NgbModal, private sharedDataService: SharedDataService) {
-    this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
-      const id = parseInt(this.selectedNodeId.slice(5));
-      this.editor.drawflow.drawflow.Home.data[`${id}`] = item
-    });
+    if (this.selectedNodeId) {
+      this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
+        const id = parseInt(this.selectedNodeId.slice(5));
+        this.editor.drawflow.drawflow.Home.data[`${id}`] = item
+      });
+    }
   }
 
   ngOnInit() {
@@ -82,7 +84,7 @@ export class DrawFlowComponent implements OnInit {
       this.dragEvent();
     }
   }
-
+  
   // Private functions
   private initDrawFlow(): void {
     if (typeof document !== 'undefined') {
