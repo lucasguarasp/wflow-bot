@@ -4,6 +4,7 @@ import { TypeComponent } from '../../../models/components/type-component.enum';
 import { ComponentItem } from '../../../models/components/component-item';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { SharedDataService } from '../../../providers/sharedData.service';
+import { DataFilterService } from '../../../providers/data-filter.service';
 
 @Component({
   selector: 'app-config-components',
@@ -19,7 +20,7 @@ export class ConfigComponentsComponent implements OnInit {
   components = TypeComponent;
   public formGeral: FormGroup;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private sharedDataService: SharedDataService) {
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private sharedDataService: SharedDataService, private dataFilterService: DataFilterService) {
     this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
       this.itemSelected = item;
     });
@@ -29,6 +30,7 @@ export class ConfigComponentsComponent implements OnInit {
     debugger
     this.itemSelected = new ComponentItem(this.itemSelected);
     this.buildForms();
+    this.filterData();
   }
 
   buildForms() {
@@ -54,7 +56,7 @@ export class ConfigComponentsComponent implements OnInit {
 
   public confirmar() {
     const controleName = this.formGeral.get('name') as AbstractControl<string> | null;
-    
+
     if (controleName) {
       this.itemSelected.name = controleName.value;
       debugger
@@ -72,6 +74,59 @@ export class ConfigComponentsComponent implements OnInit {
   addInput() {
     this.inputList = document.getElementById('inputList')!;
     this.inputList.innerHTML += '<input class="form-control form-control-sm mb-2" type="text" placeholder="Insert input here">';
+  }
+
+  filterData() {
+    const people = [
+      {
+        "name": "John Doe",
+        "age": 30,
+        "address": {
+          "country": "Brazil"
+        }
+      },
+      {
+        "name": "Jane Doe",
+        "age": 25,
+        "address": {
+          "country": "United States"
+        }
+      }
+    ]
+
+    const persons = [
+      {
+        "name": "Peter Smith",
+        "age": 40,
+        "address": {
+          "country": "Canada"
+        }
+      },
+      {
+        "name": "Sarah Jones",
+        "age": 35,
+        "address": {
+          "country": "Brazil"
+        }
+      }
+    ]
+
+    const cars = [
+      {
+        "make": "Toyota",
+        "model": "Corolla",
+        "country": "Brazil"
+      },
+      {
+        "make": "Honda",
+        "model": "Civic",
+        "country": "United States"
+      }
+    ]
+    const data = [...people, ...persons, ...cars]; 
+    const expression = "[?address.country == 'li' || country == 'po']";
+    const filteredData = this.dataFilterService.filterData(data, expression);
+    console.log(filteredData); // Faça algo com os dados filtrados
   }
 
 }

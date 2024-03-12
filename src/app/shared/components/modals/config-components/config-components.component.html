@@ -6,6 +6,7 @@
 <div class="modal-body">
   <app-nav-tabs-config [itemSelected]="itemSelected"></app-nav-tabs-config>
   <div class="tab-content" id="nav-tabContent">
+    <!-- TAB GERAL -->
     <div class="tab-pane fade show active" id="nav-geral">
       <form [formGroup]="formGeral">
         <div class="form-group">
@@ -15,7 +16,8 @@
         </div>
         <div class="form-group">
           <label for="nameOut">Name out</label>
-          <input type="text" class="form-control" placeholder="Enter component output name" formControlName="nameOut" id="nameOut">
+          <input type="text" class="form-control" placeholder="Enter component output name" formControlName="nameOut"
+            id="nameOut">
         </div>
       </form>
 
@@ -38,15 +40,24 @@
         </div>
       </div>
     </div>
+    <!-- END TAB GERAL -->
 
+    <!-- TAB PARA CADA COMPONENT -->
     <ng-container *ngFor="let component of components | keyvalue">
       <div class="tab-pane fade"
         *ngIf="itemSelected.class === component.value && component.value !== components.StartFlow"
         [attr.id]="component.key">
         {{component.key}}
+
+        <ng-container *ngIf="components.Mapper">
+          opa
+        </ng-container>
+
+
+
       </div>
     </ng-container>
-    
+    <!-- END TAB PARA CADA COMPONENT -->
   </div>
 
 </div>
