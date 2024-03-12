@@ -12,7 +12,8 @@ export enum TypeComponent {
     File = "file",
     Decision = "decision",
     BackToParent = "backToParent",
-    Anotation = "anotation"
+    Anotation = "anotation",
+    SendMessage = "sendMessage"
 }
 
 export const icon = new Map<TypeComponent, string>([
@@ -29,6 +30,7 @@ export const icon = new Map<TypeComponent, string>([
     [TypeComponent.File, 'fa fa-file'],
     [TypeComponent.Decision, 'fa fa-code-fork'],
     [TypeComponent.BackToParent, 'fa fa-reply'],
-    [TypeComponent.Anotation, 'fa fa-comment']
+    [TypeComponent.Anotation, 'fa fa-comment'],
+    [TypeComponent.SendMessage, 'fa fa-paper-plane']
   ]);
   

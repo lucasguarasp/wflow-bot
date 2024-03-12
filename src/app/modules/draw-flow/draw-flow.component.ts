@@ -390,7 +390,8 @@ export class DrawFlowComponent implements OnInit {
 
     const modalRef = this.modalService.open(ConfigComponentsComponent, {
       centered: true,
-      backdrop: 'static'
+      backdrop: 'static',
+      size: 'lg'
     });
 
     modalRef.componentInstance.itemSelected = this.selectedNode;
@@ -438,23 +439,23 @@ export class DrawFlowComponent implements OnInit {
     this.editDivHtml = document.createElement('div');
     this.editDivHtml.id = 'editNode';
     this.editDivHtml.innerHTML = '<i class="fas fa-pen" aria-hidden="true"></i>';
-    this.editDivHtml.style.display = 'block';
-    this.editDivHtml.style.position = 'absolute';
     this.editDivHtml.className = 'edit-node-button';
 
-    this.editDivHtml.style.right = '22px';
-    this.editDivHtml.style.top = '-15px';
-    this.editDivHtml.style.width = '30px';
-    this.editDivHtml.style.height = '30px';
-    this.editDivHtml.style.borderRadius = '50%';
-    this.editDivHtml.style.textAlign = 'center';
-    this.editDivHtml.style.fontSize = 'x-small';
-
-    this.editDivHtml.style.border = '2px solid #4ea9ff';
-    this.editDivHtml.style.background = 'white';
-    this.editDivHtml.style.color = '#4ea9ff';
-    // this.editDivHtml.style.boxShadow = '0 2px 20px 2px #4ea9ff';
-    this.editDivHtml.style.lineHeight = '25px';
+    // já add no css
+    // this.editDivHtml.style.display = 'block';
+    // this.editDivHtml.style.position = 'absolute';
+    // this.editDivHtml.style.right = '22px';
+    // this.editDivHtml.style.top = '-15px';
+    // this.editDivHtml.style.width = '30px';
+    // this.editDivHtml.style.height = '30px';
+    // this.editDivHtml.style.borderRadius = '50%';
+    // this.editDivHtml.style.textAlign = 'center';
+    // this.editDivHtml.style.fontSize = 'x-small';
+    // this.editDivHtml.style.border = '2px solid #4ea9ff';
+    // this.editDivHtml.style.background = 'white';
+    // this.editDivHtml.style.color = '#4ea9ff';
+    // // this.editDivHtml.style.boxShadow = '0 2px 20px 2px #4ea9ff';
+    // this.editDivHtml.style.lineHeight = '25px';
 
     const selectedNodeHtml = document.getElementById(this.selectedNodeId);
     selectedNodeHtml?.append(this.editDivHtml);
