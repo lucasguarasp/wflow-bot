@@ -285,7 +285,7 @@ export class DrawFlowComponent implements OnInit {
     switch (name) {
       case TypeComponent.StartFlow:
         html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
-        this.editor.addNode(name, 0, 1, pos_x, pos_y, name, { __sessionData__: {} }, html);
+        this.editor.addNode(name, 0, 1, pos_x, pos_y, name, {}, html);
         break;
       case TypeComponent.EndFlow:
         var endFlow = `
@@ -293,7 +293,15 @@ export class DrawFlowComponent implements OnInit {
           <div class="title-box"><i class="fa fa-circle"></i> endFlow</div>
         </div>
         `;
-        this.editor.addNode('endFlow', 1, 0, pos_x, pos_y, 'endFlow', { data: {} }, endFlow);
+        this.editor.addNode('endFlow', 1, 0, pos_x, pos_y, 'endFlow', {}, endFlow);
+        break;
+      case TypeComponent.SendMessage:
+        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
+        this.editor.addNode(name, 1, 1, pos_x, pos_y, name, { "html": "Your text...", "acoes": [] }, html);
+        break;
+      case TypeComponent.Request:
+        html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
+        this.editor.addNode(name, 1, 1, pos_x, pos_y, name, { "html": "Your ask...", "acoes": [{ "rotulo": "Sim", "value": "sim" }, { "rotulo": "Não", "value": "nao" }] }, html);
         break;
       case 'Anotation':
         var Anotation = `
@@ -328,7 +336,7 @@ export class DrawFlowComponent implements OnInit {
       default:
         if (name) {
           html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
-          this.editor.addNode(name, 1, 1, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
+          this.editor.addNode(name, 1, 1, pos_x, pos_y, name, {}, html);
         }
     }
 

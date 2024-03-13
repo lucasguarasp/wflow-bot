@@ -12,9 +12,10 @@ export class FlowService {
   async startFromNode(jsonData: string) {
     debugger
     const data = JSON.parse(jsonData);
+    const moduleName = Object.keys(data.drawflow)[0];
     const nodes: { [key: string]: ItemInterface } = data.drawflow.Home.data;
     let currentNode: ItemInterface | undefined = Object.values(nodes).find((node: ItemInterface) => node.class === TypeComponent.StartFlow);
-    const results: { [key: string]: { name: string, result: any } } = {}; // Declara a variável results dentro da função
+    const results: { [key: string]: { moduleName: string, activeName: string, result: any } } = {}; // Declara a variável results dentro da função
 
     while (currentNode && currentNode.outputs && Object.keys(currentNode.outputs).length > 0) {
       const outputKeys = Object.keys(currentNode.outputs);
@@ -34,14 +35,17 @@ export class FlowService {
         //   });
       } else if (currentNode.class === "Response") {
         // Lógica relacionada ao nó "Response"
-      }else if (currentNode.class === TypeComponent.SendMessage) {
+      } else if (currentNode.class === TypeComponent.SendMessage) {
         // Lógica relacionada ao nó "Response"
-        results[currentNode.id] = { name: currentNode.name, result: currentNode.data.html }; // Salva o nome do nó e o resultado
+        results[currentNode.id] = { moduleName: moduleName, activeName: currentNode.name, result: currentNode.data.html }; // Salva o nome do nó e o resultado
       }
 
       const outputKey = outputKeys[0];
 
-      // results[currentNode.id] = { name: currentNode.name, result: currentNode.data }; // Salva o nome do nó e o resultado
+      // Verificar se currentNode.id já foi adicionado em results
+      if (!(currentNode.id in results)) {
+        results[currentNode.id] = { moduleName: moduleName, activeName: currentNode.name, result: currentNode.data }; // Adiciona apenas se não existir
+      }
 
       const connection = currentNode.outputs[outputKey].connections[0];
       const nextNodeId = connection.node;

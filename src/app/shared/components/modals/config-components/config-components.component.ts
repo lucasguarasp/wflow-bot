@@ -40,6 +40,7 @@ export class ConfigComponentsComponent implements OnInit {
     debugger
     // this.methodsCallapi = (Object.keys(MethodCallapi) as Array<keyof typeof MethodCallapi>).filter(key => isNaN(Number(MethodCallapi[key]))) as string[];
     this.itemSelected = new ComponentItem(this.itemSelected);
+    JSON.stringify(this.itemSelected);
     this.buildForms();
     this.filterData();
   }
@@ -48,6 +49,7 @@ export class ConfigComponentsComponent implements OnInit {
     this.formGeral = this.fb.group({
       name: [''],
       nameOut: [''],
+      data: [{}],
     });
 
     this.fillFormGeral();
@@ -55,9 +57,11 @@ export class ConfigComponentsComponent implements OnInit {
 
   fillFormGeral() {
     debugger
+    var teste = JSON.stringify(this.itemSelected.data);
     this.formGeral.patchValue({
       name: this.itemSelected.name,
-      nameOut: JSON.stringify(this.itemSelected.data)
+      nameOut: this.itemSelected.name.concat('_result'),
+      data: JSON.stringify(this.itemSelected.data)
     });
 
     if (this.itemSelected.class === this.components.StartFlow) {
@@ -86,9 +90,17 @@ export class ConfigComponentsComponent implements OnInit {
       debugger
       if (this.itemSelected.hasOwnProperty(controlName)) {
         // Define o valor do controle no itemSelected
-        this.itemSelected[controlName] = this.formGeral.get(controlName)?.value;
+        this.itemSelected[controlName] = this.tryParseJSON(this.formGeral.get(controlName)?.value);
       }
     });
+  }
+
+  tryParseJSON(jsonString: string): any {
+    try {
+      return JSON.parse(jsonString);
+    } catch (error) {
+      return jsonString; // or handle the error as needed
+    }
   }
 
   public cancelar() {

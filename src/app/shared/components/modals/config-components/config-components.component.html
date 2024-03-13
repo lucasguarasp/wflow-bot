@@ -62,9 +62,11 @@
         <!-- TAB PARA SendMessage -->
         <ng-container *ngIf="components.SendMessage === component.value">
           <div class="form-group">
-            <label>Template:</label>
-            <textarea class="form-control" rows="3" [(ngModel)]="itemSelected.data"></textarea>
-            <small class="form-text text-muted">{{ 'example: {"html": "Your text...", "acoes":[]}' }}</small>
+            <form [formGroup]="formGeral">
+              <label>Template:</label>
+              <textarea class="form-control" rows="3" formControlName="data" id="data"></textarea>
+              <small class="form-text text-muted">{{ 'example: {"html": "Your text...", "acoes":[]}' }}</small>
+            </form>
           </div>
         </ng-container>
         <!-- END TAB PARA SendMessage -->
