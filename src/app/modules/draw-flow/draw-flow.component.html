@@ -15,8 +15,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
     integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
 
-
-
   <header>
     <h2>Drawflow</h2>
     <!-- <div class="github-link"><a href="https://github.com/jerosoler/Drawflow" target="_blank"> <i class="fas fa-save fa-3x"></i></a></div> -->
@@ -31,14 +29,17 @@
       <span class="material-icons-outlined">pie_chart</span> --Outlined
       <span class="material-icons-round">pie_chart</span> Round 
       <span class="material-icons-sharp">pie_chart</span> -- Sharp 
-      <span class="material-icons-two-tone">pie_chart</span> --Two Tone  -->    
-
+      <span class="material-icons-two-tone">pie_chart</span> --Two Tone  -->
+      <div class="drag-drawflow drag-bars" [attr.data-node]="">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+        <span> Components</span>
+      </div>
       <div *ngFor="let name of components | keyvalue">
         <div class="drag-drawflow" draggable="true" (dragstart)="drag($event)" [attr.data-node]="name.value">
           <i [ngClass]="getIconClass(name.value)"></i><span> {{name.key}}</span>
         </div>
       </div>
-      
+
     </div>
     <div class="col-right">
       <div class="menu">
@@ -50,6 +51,9 @@
 
         <div class="btn-export" (click)="export()">Export</div>
         <div class="btn-import" (click)="import()">Import</div>
+        <div class="btn-test" (click)="runTest()" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"> <i class="fa fa-play fa-xs"></i>
+          Test</div>
 
         <div class="btn-lock" [ngClass]="locked ? 'locked' : ''">
           <i (click)="changeMode()" class="fas fa-lock-open" [ngStyle]="{ display: locked ? 'none' : 'block' }"></i>
@@ -64,6 +68,22 @@
       </div>
     </div>
   </div>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <!-- <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5> -->
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+        </div>
+      </div>
+    </div>
+  </nav>
 </body>
 
 </html>

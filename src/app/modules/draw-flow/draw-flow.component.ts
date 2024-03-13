@@ -336,7 +336,6 @@ export class DrawFlowComponent implements OnInit {
   }
 
   async export() {
-    debugger
     // var nameModule = this.editor.changeModule('NovoNome');
 
     // this.editor.addModule('nameNewModule');
@@ -354,7 +353,10 @@ export class DrawFlowComponent implements OnInit {
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', fileName + '.json');
     linkElement.click();
+  }
 
+  async runTest() {
+    const html = JSON.stringify(this.editor.export(), null, 4)
     await this.flowService.startFromNode(html);
   }
 
