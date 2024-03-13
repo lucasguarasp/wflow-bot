@@ -26,6 +26,7 @@
     "bootstrap": "^5.3.3",
     "drawflow": "^0.0.59",
     "font-awesome": "^4.7.0",
+    "handlebars": "^4.7.8",
     "jmespath": "^0.16.0",
     "jquery": "^3.7.1",
     "material-icons": "^1.13.12",
