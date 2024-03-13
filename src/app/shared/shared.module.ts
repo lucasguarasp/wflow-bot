@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DataFilterService } from './providers/data-filter.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ApiService } from './providers/api.service';
+import { FlowService } from './providers/flow.service';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { ApiService } from './providers/api.service';
     NgSelectModule
   ],
   declarations: [ConfirmacaoComponent],
-  providers: [DataFilterService, ApiService],
+  providers: [DataFilterService, ApiService, FlowService],
   exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule, KeyValuePipe, NgSelectModule]
 })
 export class SharedModule {
@@ -28,7 +29,8 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        ApiService
+        ApiService,
+        FlowService
       ]
     }
   }

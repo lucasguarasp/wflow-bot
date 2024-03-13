@@ -4,6 +4,7 @@ import Drawflow from 'drawflow';
 import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
 import { TypeComponent, icon } from '../../shared/models/components/type-component.enum';
 import { SharedDataService } from '../../shared/providers/sharedData.service';
+import { FlowService } from '../../shared/providers/flow.service';
 
 @Component({
   selector: 'app-draw-flow',
@@ -50,7 +51,7 @@ export class DrawFlowComponent implements OnInit {
     return icon.get(type) || 'fa fa-pencil'; // Pode definir uma classe padrão se não houver correspondência
   }
 
-  constructor(private modalService: NgbModal, private sharedDataService: SharedDataService) {
+  constructor(private modalService: NgbModal, private sharedDataService: SharedDataService, private flowService: FlowService) {
 
     this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
       if (this.selectedNodeId) {
@@ -76,12 +77,12 @@ export class DrawFlowComponent implements OnInit {
     this.editor.addNodeOutput(this.selectedNodeId.slice(5));
   }
 
-  teste(){
+  teste() {
     // da pra usar pra validar se já possui mais de 1 item com mesmo nome, retorna um array
-    var arrayNames= this.editor.getNodesFromName(this.selectedNode.name);
+    var arrayNames = this.editor.getNodesFromName(this.selectedNode.name);
     debugger
     var item = this.editor.getNodeFromId(this.selectedNodeId.slice(5));
-    var module = this.editor.getModuleFromNodeId(this.selectedNodeId.slice(5));	
+    var module = this.editor.getModuleFromNodeId(this.selectedNodeId.slice(5));
   }
 
   private getKeyByValue(value: string, enumObject: any): string | null {
@@ -282,11 +283,11 @@ export class DrawFlowComponent implements OnInit {
     // this.editor.addNode(name, inputs, outputs, posx, posy, class, data, html);
     debugger
     switch (name) {
-      case 'startFlow':
+      case TypeComponent.StartFlow:
         html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
         this.editor.addNode(name, 0, 1, pos_x, pos_y, name, { __sessionData__: {} }, html);
         break;
-      case 'endFlow':
+      case TypeComponent.EndFlow:
         var endFlow = `
         <div>
           <div class="title-box"><i class="fa fa-circle"></i> endFlow</div>
@@ -327,14 +328,14 @@ export class DrawFlowComponent implements OnInit {
       default:
         if (name) {
           html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;
-          this.editor.addNode(name, 0, 0, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
+          this.editor.addNode(name, 1, 1, pos_x, pos_y, name, { nameOut: null, data: {} }, html);
         }
     }
 
     return true;
   }
 
-  export() {
+  async export() {
     debugger
     // var nameModule = this.editor.changeModule('NovoNome');
 
@@ -345,6 +346,16 @@ export class DrawFlowComponent implements OnInit {
     // this.editor.changeModule('Home');
 
     const html = JSON.stringify(this.editor.export(), null, 4)
+
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(html);
+    const fileName = "teste";
+
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', fileName + '.json');
+    linkElement.click();
+
+    await this.flowService.startFromNode(html);
   }
 
   save() {
