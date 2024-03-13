@@ -52,10 +52,10 @@ export class DrawFlowComponent implements OnInit {
   }
 
   constructor(private modalService: NgbModal, private sharedDataService: SharedDataService, private flowService: FlowService) {
-
     this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
       if (this.selectedNodeId) {
-        const id = parseInt(this.selectedNodeId.slice(5));
+        const id = this.selectedNodeId.slice(5);
+        var teste = this.editor.drawflow.drawflow.Home.data[`${id}`];
         this.editor.drawflow.drawflow.Home.data[`${id}`] = item
       }
     });
@@ -415,7 +415,6 @@ export class DrawFlowComponent implements OnInit {
     modalRef.result.then(result => {
       if (result) {
         this.updateNameComponentHtml(typeComponentSelected, result.name);
-
       }
     });
   }

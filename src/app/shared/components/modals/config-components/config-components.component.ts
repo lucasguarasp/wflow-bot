@@ -68,14 +68,27 @@ export class ConfigComponentsComponent implements OnInit {
   public confirmar() {
     const controleName = this.formGeral.get('name') as AbstractControl<string> | null;
 
-    if (controleName) {
-      this.itemSelected.name = controleName.value;
-      debugger
-    }
+    // if (controleName) {
+    //   this.itemSelected.name = controleName.value;    
+    // }
+
+    this.updateItem()
 
     this.sharedDataService.updateSelectedItem(this.itemSelected);
     this.activeModal.close(this.itemSelected);
 
+  }
+
+  updateItem() {
+    // Itera sobre os controles do FormGroup
+    Object.keys(this.formGeral.controls).forEach(controlName => {
+      // Verifica se o campo correspondente existe em itemSelected
+      debugger
+      if (this.itemSelected.hasOwnProperty(controlName)) {
+        // Define o valor do controle no itemSelected
+        this.itemSelected[controlName] = this.formGeral.get(controlName)?.value;
+      }
+    });
   }
 
   public cancelar() {

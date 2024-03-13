@@ -1,4 +1,5 @@
 export class ComponentItem {
+    [key: string]: any;
     id: string;
     name: string;
     class: string;
