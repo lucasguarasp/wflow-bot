@@ -17,7 +17,7 @@ import { ConfigComponentsModule } from './shared/components/modals/config-compon
     AppRoutingModule,
     SharedModule.forRoot(),
     DrawFlowModule,
-    ConfigComponentsModule
+    ConfigComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

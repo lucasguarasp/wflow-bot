@@ -7,6 +7,8 @@ import { ConfigComponentsComponent } from './components/modals/config-components
 import { ConfigComponentsModule } from './components/modals/config-components/config-components.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { DataFilterService } from './providers/data-filter.service';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ApiService } from './providers/api.service';
 
 @NgModule({
   imports: [
@@ -14,17 +16,19 @@ import { DataFilterService } from './providers/data-filter.service';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule
+    BrowserModule,
+    NgSelectModule
   ],
   declarations: [ConfirmacaoComponent],
-  providers: [DataFilterService],
-  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule, KeyValuePipe]
+  providers: [DataFilterService, ApiService],
+  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule, KeyValuePipe, NgSelectModule]
 })
 export class SharedModule {
   static forRoot() {
     return {
       ngModule: SharedModule,
       providers: [
+        ApiService
       ]
     }
   }
