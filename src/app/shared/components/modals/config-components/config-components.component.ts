@@ -2,11 +2,9 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@ang
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TypeComponent } from '../../../models/components/type-component.enum';
 import { ComponentItem } from '../../../models/components/component-item';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SharedDataService } from '../../../providers/sharedData.service';
 import { DataFilterService } from '../../../providers/data-filter.service';
-import { MethodCallapi } from '../../../models/method-callapi.enum';
-import { ApiService } from '../../../providers/api.service';
 
 declare module 'axios' {
   interface AxiosRequestConfig {
@@ -26,11 +24,9 @@ export class ConfigComponentsComponent implements OnInit {
   @Output() itemOut = new EventEmitter<FormGroup>();
 
   components = TypeComponent;
-  methodsCallapi = MethodCallapi;
-  // methodsCallapi: string[] = [];
   public formGeral: FormGroup;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private sharedDataService: SharedDataService, private dataFilterService: DataFilterService, private apiService: ApiService) {
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private sharedDataService: SharedDataService, private dataFilterService: DataFilterService) {
     this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
       this.itemSelected = item;
     });
@@ -56,8 +52,6 @@ export class ConfigComponentsComponent implements OnInit {
   }
 
   fillFormGeral() {
-    debugger
-    var teste = JSON.stringify(this.itemSelected.data);
     this.formGeral.patchValue({
       name: this.itemSelected.name,
       nameOut: this.itemSelected.name.concat('_result'),
@@ -70,11 +64,6 @@ export class ConfigComponentsComponent implements OnInit {
   }
 
   public confirmar() {
-    const controleName = this.formGeral.get('name') as AbstractControl<string> | null;
-
-    // if (controleName) {
-    //   this.itemSelected.name = controleName.value;    
-    // }
 
     this.updateItem()
 
@@ -95,7 +84,7 @@ export class ConfigComponentsComponent implements OnInit {
     });
   }
 
-  tryParseJSON(jsonString: string): any {
+  private tryParseJSON(jsonString: string): any {
     try {
       return JSON.parse(jsonString);
     } catch (error) {
@@ -190,43 +179,5 @@ export class ConfigComponentsComponent implements OnInit {
 
   // }
 
-
-  async callapi() {
-    debugger
-    const url = (document.querySelector("[data-url]") as HTMLInputElement).value
-    const method = (document.querySelector("[data-method]") as HTMLInputElement).value
-    await this.apiService.getData(url, method)
-      .then(response => {
-        // Manipule a resposta aqui
-        console.log(response);
-      })
-      .catch(error => {
-        // Lide com erros aqui
-        console.log('Erro ao obter dados:', error);
-      });
-
-
-    //    fetch("https://postman-echo.com/get", {
-    //   "headers": {
-    //     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-    //     "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-    //     "cache-control": "max-age=0",
-    //     "if-none-match": "W/\"49b-oZpbgMBePXXa5DSI2T40aHnudmQ\"",
-    //     "sec-ch-ua": "\"Chromium\";v=\"122\", \"Not(A:Brand\";v=\"24\", \"Google Chrome\";v=\"122\"",
-    //     "sec-ch-ua-mobile": "?0",
-    //     "sec-ch-ua-platform": "\"Windows\"",
-    //     "sec-fetch-dest": "document",
-    //     "sec-fetch-mode": "navigate",
-    //     "sec-fetch-site": "none",
-    //     "sec-fetch-user": "?1",
-    //     "upgrade-insecure-requests": "1",
-    //     "cookie": "sails.sid=s%3ALhG1ZXIC1q0gsZ-27DpuWW6t0CCv4Mvf.V0EgsYGif94%2FAAaaDSrBD%2BqGUXRHN7JsYeZANyRTNMA"
-    //   },
-    //   "referrerPolicy": "strict-origin-when-cross-origin",
-    //   "body": null,
-    //   "method": "GET"
-    // });
-
-  }
 
 }
