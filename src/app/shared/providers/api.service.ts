@@ -1,9 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // import axios from 'axios-observable';
 import axios from 'axios';
-import { from } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
 
 
 
@@ -11,7 +8,7 @@ import { ajax } from 'rxjs/ajax';
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   public async getData(url: string, method: string, headers?: []) {
 
