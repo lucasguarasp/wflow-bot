@@ -12,6 +12,7 @@ export class ApiService {
 
   public async getData(url: string, method: string, headers?: []) {
 
+    debugger
     try {
       const response = await axios.get(url, {
         headers: {
@@ -22,8 +23,7 @@ export class ApiService {
         },
         method: method // Método da solicitação
       });
-      return response.data
-      debugger
+      return response
     } catch (error) {
       debugger
       throw new Error(`Erro ao fazer a solicitação: ${error}`);
