@@ -21,19 +21,10 @@ export class TabCallApiComponent implements OnInit {
   }
 
   async callapi() {
-    debugger
     const url = (document.querySelector("[data-url]") as HTMLInputElement).value
     const method = (document.querySelector("[data-method]") as HTMLInputElement).value
-    await this.apiService.getData(url, method)
-      .then(response => {
-        // Manipule a resposta aqui
-        console.log(response);
-      })
-      .catch(error => {
-        // Lide com erros aqui
-        console.log('Erro ao obter dados:', error);
-      });
-
+    const teste = await this.apiService.getData(url, method);
+    debugger
 
     //    fetch("https://postman-echo.com/get", {
     //   "headers": {

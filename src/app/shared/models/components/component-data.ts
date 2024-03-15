@@ -5,7 +5,6 @@ export class ComponentData {
     }
 
     public constructor(name: string, output: any) {
-        debugger
         this.data.name = name;
         this.data.output = output;
     }

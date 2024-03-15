@@ -10,7 +10,7 @@ export class FlowService {
   constructor() { }
 
   async startFromNode(jsonData: string) {
-    debugger
+    
     const data = JSON.parse(jsonData);
     const moduleName = Object.keys(data.drawflow)[0];
     const nodes: { [key: string]: ItemInterface } = data.drawflow.Home.data;

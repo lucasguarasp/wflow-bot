@@ -80,7 +80,6 @@ export class DrawFlowComponent implements OnInit {
   teste() {
     // da pra usar pra validar se já possui mais de 1 item com mesmo nome, retorna um array
     var arrayNames = this.editor.getNodesFromName(this.selectedNode.name);
-    debugger
     var item = this.editor.getNodeFromId(this.selectedNodeId.slice(5));
     var module = this.editor.getModuleFromNodeId(this.selectedNodeId.slice(5));
   }
@@ -281,7 +280,7 @@ export class DrawFlowComponent implements OnInit {
     let html = '';
 
     // this.editor.addNode(name, inputs, outputs, posx, posy, class, data, html);
-    debugger
+    
     switch (name) {
       case TypeComponent.StartFlow:
         html = `<div class="title-box"><i class="${this.getIconClass(name as TypeComponent)}"></i> <span>${keyFromName}</span></div>`;

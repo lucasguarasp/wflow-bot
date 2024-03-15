@@ -33,7 +33,7 @@ export class ConfigComponentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
+    
     // this.methodsCallapi = (Object.keys(MethodCallapi) as Array<keyof typeof MethodCallapi>).filter(key => isNaN(Number(MethodCallapi[key]))) as string[];
     this.itemSelected = new ComponentItem(this.itemSelected);
     JSON.stringify(this.itemSelected);
