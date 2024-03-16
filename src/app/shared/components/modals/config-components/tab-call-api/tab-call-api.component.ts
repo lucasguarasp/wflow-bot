@@ -23,7 +23,8 @@ export class TabCallApiComponent implements OnInit {
   async callapi() {
     const url = (document.querySelector("[data-url]") as HTMLInputElement).value
     const method = (document.querySelector("[data-method]") as HTMLInputElement).value
-    const teste = await this.apiService.getData(url, method);
+    // const teste = (await this.apiService.getData(url, method)).toPromise();
+    const teste =  (await this.apiService.getData(url, method)).data;
     debugger
 
     //    fetch("https://postman-echo.com/get", {

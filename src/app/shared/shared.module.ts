@@ -10,6 +10,7 @@ import { DataFilterService } from './providers/data-filter.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ApiService } from './providers/api.service';
 import { FlowService } from './providers/flow.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { FlowService } from './providers/flow.service';
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    NgSelectModule
+    NgSelectModule,
+    HttpClientModule 
   ],
   declarations: [ConfirmacaoComponent],
   providers: [DataFilterService, ApiService, FlowService],
@@ -30,7 +32,8 @@ export class SharedModule {
       ngModule: SharedModule,
       providers: [
         ApiService,
-        FlowService
+        FlowService,
+        HttpClientModule
       ]
     }
   }
