@@ -13,6 +13,7 @@ export class ApiService {
   constructor() { }
 
   public async getData(url: string, method: string, headers?: []) {
+    const startTime = new Date().getTime(); // Captura o tempo antes da requisição
 
     try {
       const response = await axios.get(url, {
@@ -21,11 +22,24 @@ export class ApiService {
         },
         method: method // Método da solicitação
       });
-      return response
+
+      const endTime = new Date().getTime(); // Captura o tempo após a requisição
+      const timeTaken = endTime - startTime; // Calcula a diferença de tempo
+
+      const responseData = {
+        data: response.data,
+        headers: response.headers,
+        status: response.status,
+        customData: { time: timeTaken }
+      };
+      return responseData
+
     } catch (error) {
       debugger
       throw new Error(`Erro ao fazer a solicitação: ${error}`);
     }
+
+
 
   }
 

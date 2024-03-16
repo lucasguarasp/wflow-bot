@@ -32,6 +32,7 @@
     "jmespath": "^0.16.0",
     "jquery": "^3.7.1",
     "material-icons": "^1.13.12",
+    "pretty-bytes": "^6.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

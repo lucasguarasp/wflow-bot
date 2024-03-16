@@ -20,18 +20,18 @@
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="json-tab" data-bs-toggle="tab" data-bs-target="#json" type="button" role="tab"
-          aria-controls="json" aria-selected="false">JSON</button>
+          aria-controls="json" aria-selected="false" (click)="addJsonRequestBody()">JSON</button>
       </li>
     </ul>
 
     <div class="tab-content p-3 border-top-0 border">
       <div class="tab-pane fade show active" id="query-params" role="tabpanel" aria-labelledby="query-params-tab">
         <div data-query-params></div>
-        <button data-add-query-param-btn class="mt-2 btn btn-outline-success" type="button">Add</button>
+        <button data-add-query-param-btn class="mt-2 btn btn-outline-success" type="button" (click)="addQueryParam()">Add Params</button>
       </div>
       <div class="tab-pane fade" id="request-headers" role="tabpanel" aria-labelledby="request-headers-tab">
         <div data-request-headers></div>
-        <button data-add-request-header-btn class="mt-2 btn btn-outline-success" type="button">Add</button>
+        <button data-add-request-header-btn class="mt-2 btn btn-outline-success" type="button" (click)="addRequestHeader()">Add Header</button>
       </div>
       <div class="tab-pane fade" id="json" role="tabpanel" aria-labelledby="json-tab">
         <div data-json-request-body class="overflow-auto" style="max-height: 200px;"></div>
