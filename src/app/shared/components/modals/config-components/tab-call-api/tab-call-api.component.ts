@@ -30,8 +30,8 @@ export class TabCallApiComponent implements OnInit {
         const element = this.elementRef.nativeElement.querySelector("[data-response-section]");
         if (element) {
           this.renderer.removeClass(element, 'd-none');
-          this.updateResponseDetails(response);
           this.updateResponse(response.data);
+          this.updateResponseDetails(response);
           this.updateResponseHeaders(response.headers)
         }
       }
@@ -85,10 +85,15 @@ export class TabCallApiComponent implements OnInit {
   }
 
   private updateResponse(response: any) {
-    const jsonResponseBody = document.querySelector("[data-json-response-body]")
-    if (jsonResponseBody) {
-      jsonResponseBody.innerHTML = JSON.stringify(response);
-      // jsonResponseBody.innerHTML = response;
+    // const jsonResponseBody = document.querySelector("[data-json-response-body]")
+    // if (jsonResponseBody) {
+    //   jsonResponseBody.innerHTML = JSON.stringify(response);
+    //   // jsonResponseBody.innerHTML = response;
+    // }
+
+    const jsonResponseBodyElement = this.elementRef.nativeElement.querySelector('[data-json-response-body]');
+    if (jsonResponseBodyElement) {
+      jsonResponseBodyElement.innerText = JSON.stringify(response, null, 2);
     }
   }
 
