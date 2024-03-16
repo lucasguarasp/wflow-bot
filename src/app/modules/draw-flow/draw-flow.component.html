@@ -51,8 +51,7 @@
 
         <div class="btn-export" (click)="export()">Export</div>
         <div class="btn-import" (click)="import()">Import</div>
-        <div class="btn-test" (click)="runTest()" type="button" data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"> <i class="fa fa-play fa-xs"></i>
+        <div class="btn-test" (click)="runTest()" type="button"> <i class="fa fa-play fa-xs"></i>
           Test</div>
 
         <div class="btn-lock" [ngClass]="locked ? 'locked' : ''">
@@ -68,22 +67,6 @@
       </div>
     </div>
   </div>
-
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
-        aria-labelledby="offcanvasDarkNavbarLabel">
-        <div class="offcanvas-header">
-          <!-- <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5> -->
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-            aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-
-        </div>
-      </div>
-    </div>
-  </nav>
 </body>
 
 </html>

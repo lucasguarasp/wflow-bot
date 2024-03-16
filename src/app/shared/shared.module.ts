@@ -11,6 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ApiService } from './providers/api.service';
 import { FlowService } from './providers/flow.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { WbotComponent } from './components/modals/wbot/wbot.component';
 
 @NgModule({
   imports: [
@@ -20,11 +21,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     BrowserModule,
     NgSelectModule,
-    HttpClientModule 
+    HttpClientModule
   ],
-  declarations: [ConfirmacaoComponent],
+  declarations: [ConfirmacaoComponent, WbotComponent],
   providers: [DataFilterService, ApiService, FlowService],
-  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule, KeyValuePipe, NgSelectModule]
+  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, BrowserModule, ConfirmacaoComponent, ConfigComponentsModule, KeyValuePipe, NgSelectModule, WbotComponent]
 })
 export class SharedModule {
   static forRoot() {

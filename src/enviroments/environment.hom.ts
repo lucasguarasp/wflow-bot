@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://xxxx-hom.com.br/api/'
+  apiUrl: 'https://wflow-bot-api-getway.vercel.app/api/gateway'
 };

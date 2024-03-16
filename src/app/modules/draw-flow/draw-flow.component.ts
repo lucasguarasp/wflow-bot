@@ -5,6 +5,7 @@ import { ConfigComponentsComponent } from '../../shared/components/modals/config
 import { TypeComponent, icon } from '../../shared/models/components/type-component.enum';
 import { SharedDataService } from '../../shared/providers/sharedData.service';
 import { FlowService } from '../../shared/providers/flow.service';
+import { WbotComponent } from '../../shared/components/modals/wbot/wbot.component';
 
 @Component({
   selector: 'app-draw-flow',
@@ -362,7 +363,13 @@ export class DrawFlowComponent implements OnInit {
     linkElement.click();
   }
 
-  async runTest() {
+  async runTest() {   
+    
+    const modalRef = this.modalService.open(WbotComponent, {
+      centered: true,
+      backdrop: 'static'
+    });
+
     const html = JSON.stringify(this.editor.export(), null, 4)
     await this.flowService.startFromNode(html);
   }
