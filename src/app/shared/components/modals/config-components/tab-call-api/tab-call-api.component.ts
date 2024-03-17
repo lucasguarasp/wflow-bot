@@ -27,22 +27,25 @@ export class TabCallApiComponent implements OnInit {
     const method = (document.querySelector("[data-method]") as HTMLInputElement).value
     const element = this.elementRef.nativeElement.querySelector("[data-response-section]");
 
-    this.apiService.getData(url, method).then(
-      response => {
-        if (element) {
-          this.renderer.removeClass(element, 'd-none');
-          // this.updateResponse(response.data);
-          this.updateResponseDetails(response);
-          // this.updateResponseHeaders(response.headers)
+    try {
+      const response = await this.apiService.getData(url, method).then(
+        response => {
+          debugger
+          if (element && response !== undefined && response !== null) {
+            this.renderer.removeClass(element, 'd-none');
+            this.updateResponse(response.data);
+            this.updateResponseDetails(response);
+            this.updateResponseHeaders(response.headers)
+          }
         }
-      }
-    ).catch(error => {
+      )   
+
+    } catch (error) {
       if (element) {
         this.renderer.removeClass(element, 'd-none');
         this.updateResponse(error);
       }
-    });;
-
+    }
   }
 
   private updateResponseDetails(response: any) {

@@ -18,41 +18,45 @@ export class ApiService {
 
     debugger
     const startTime = new Date().getTime(); // Captura o tempo antes da requisição
+    let timeTaken: any = null;
 
     const headersObject = {}
     if (headers)
       Object.assign({}, ...headers);
 
     // Configuração da solicitação
-    const requestOptions = {
+    const requestOptions: any = {
       method: method, // Método da solicitação (GET neste caso)
-      headers: headersObject, // Cabeçalhos da solicitação
       params: {
         key: 'value',
         destinationUrl: url // Passa a URL de destino para o servidor
       }
     };
 
+    if (Object.keys(headersObject).length !== 0) {
+      requestOptions.headers = headers;
+    }
+
     try {
       // Faz a solicitação para o seu servidor
-      axios.get(this.API_URL, requestOptions)
+      const responseData = await axios.get(this.API_URL, requestOptions)
         .then(response => {
-          console.log(response.data); // Dados da resposta recebida do servidor
-debugger
-          const responseData = {
+          console.log(JSON.stringify(response.data)); // Dados da resposta recebida do servidor
+          const endTime = new Date().getTime(); // Captura o tempo após a requisição
+          timeTaken = endTime - startTime; // Calcula a diferença de tempo
+
+          return {
             data: response.data,
             headers: response.headers,
             status: response.status,
             customData: { time: timeTaken }
-          };
-          return responseData
+            }
         })
         .catch(error => {
           console.error('Erro:', error); // Exibe o erro no console
         });
 
-      const endTime = new Date().getTime(); // Captura o tempo após a requisição
-      const timeTaken = endTime - startTime; // Calcula a diferença de tempo
+        return responseData; // Retorna os dados da resposta
 
     } catch (error: any) {
       let errorMessage = 'Erro ao fazer a solicitação';
@@ -65,8 +69,6 @@ debugger
       throw new Error(errorMessage);
       // throw new Error(`Erro ao fazer a solicitação: ${error}`);
     }
-
-
 
   }
 
