@@ -34,13 +34,22 @@
             <button type="button" class="btn btn-primary" (click)="addInput()"><i class="fa fa-plus"
                 aria-hidden="true"></i>
               input</button>
-            <div class="card card-body" id="inputList">
-            </div>
+            <!-- <div class="card card-body" id="inputList">
+            </div> -->
+            <div data-query-inputList></div>
           </div>
         </div>
       </div>
     </div>
     <!-- END TAB GERAL -->
+
+    <template data-key-value-template>
+      <div class="input-group my-2" data-key-value-pair>
+        <input type="text" data-key class="form-control" placeholder="Key" />
+        <input type="text" data-value class="form-control" placeholder="Value" />
+        <button type="button" data-remove-btn class="btn btn-outline-danger">Remove</button>
+      </div>
+    </template>
 
     <!-- TAB PARA CADA COMPONENT -->
     <ng-container *ngFor="let component of components | keyvalue">
@@ -73,7 +82,7 @@
 
         <!-- TAB PARA CallApi -->
         <ng-container *ngIf="components.CallApi === component.value">
-         <app-tab-call-api [itemSelected]="itemSelected"></app-tab-call-api>
+          <app-tab-call-api [itemSelected]="itemSelected"></app-tab-call-api>
         </ng-container>
         <!-- END TAB PARA CallApi -->
 

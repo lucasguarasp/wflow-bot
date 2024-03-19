@@ -26,13 +26,12 @@ export class TabCallApiComponent implements OnInit {
     const url = (document.querySelector("[data-url]") as HTMLInputElement).value
     const method = (document.querySelector("[data-method]") as HTMLInputElement).value
     const element = this.elementRef.nativeElement.querySelector("[data-response-section]");
-    const headers = this.elementRef.nativeElement.querySelector("[data-request-headers]").value;
-    debugger
+    const headers = this.keyValuePairsToObjects(this.elementRef.nativeElement.querySelector("[data-request-headers]"));
+    const params = this.keyValuePairsToObjects(this.elementRef.nativeElement.querySelector("[data-query-params]"));
 
     try {
-      await this.apiService.getData(url, method, headers).then(
-        response => {
-          debugger
+      await this.apiService.getData(url, method, headers, params).then(
+        response => {          
           if (element && response !== undefined && response !== null) {
             this.renderer.removeClass(element, 'd-none');
             this.updateResponse(response.data);
@@ -131,6 +130,17 @@ export class TabCallApiComponent implements OnInit {
       e.target.closest("[data-key-value-pair]").remove()
     })
     return element
+  }
+
+  private keyValuePairsToObjects(container: any) {
+    const pairs = container.querySelectorAll("[data-key-value-pair]")
+    return [...pairs].reduce((data, pair) => {
+      const key = pair.querySelector("[data-key]").value
+      const value = pair.querySelector("[data-value]").value
+  
+      if (key === "") return data
+      return { ...data, [key]: value }
+    }, {})
   }
 }
 

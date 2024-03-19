@@ -14,28 +14,31 @@ export class ApiService {
 
   constructor() { }
 
-  public async getData(url: string, method: string, headers?: []) {
+  public async getData(url: string, method: string, headers?: any, params?: any) {
 
     debugger
     const startTime = new Date().getTime(); // Captura o tempo antes da requisição
     let timeTaken: any = null;
 
-    const headersObject = {}
-    if (headers)
-      Object.assign({}, ...headers);
+    // const headersObject = {}
+    // if (Object.keys(headers).length > 0) {
+    //   Object.assign(headersObject, ...headers);
+    // }
 
     // Configuração da solicitação
     const requestOptions: any = {
       method: method, // Método da solicitação (GET neste caso)
       params: {
-        key: 'value',
-        destinationUrl: url // Passa a URL de destino para o servidor
+        // key: 'value',
+        destinationParams: params,
+        destinationUrl: url, // Passa a URL de destino para o servidor
+        destinationHeaders : headers
       }
     };
 
-    if (Object.keys(headersObject).length !== 0) {
-      requestOptions.headers = headers;
-    }
+    // if (Object.keys(headers).length > 0) {
+    //   requestOptions.destinationHeaders = headers;
+    // }
 
     try {
       // Faz a solicitação para o seu servidor
@@ -50,13 +53,13 @@ export class ApiService {
             headers: response.headers,
             status: response.status,
             customData: { time: timeTaken }
-            }
+          }
         })
         .catch(error => {
           console.error('Erro:', error); // Exibe o erro no console
         });
 
-        return responseData; // Retorna os dados da resposta
+      return responseData; // Retorna os dados da resposta
 
     } catch (error: any) {
       let errorMessage = 'Erro ao fazer a solicitação';
