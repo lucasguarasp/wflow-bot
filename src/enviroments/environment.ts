@@ -3,5 +3,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://wflow-bot-api-getway.vercel.app/api/gateway'
+  apiUrl: 'http://localhost:3000/api/gateway'
 };

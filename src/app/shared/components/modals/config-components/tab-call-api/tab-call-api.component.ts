@@ -26,9 +26,11 @@ export class TabCallApiComponent implements OnInit {
     const url = (document.querySelector("[data-url]") as HTMLInputElement).value
     const method = (document.querySelector("[data-method]") as HTMLInputElement).value
     const element = this.elementRef.nativeElement.querySelector("[data-response-section]");
+    const headers = this.elementRef.nativeElement.querySelector("[data-request-headers]").value;
+    debugger
 
     try {
-      const response = await this.apiService.getData(url, method).then(
+      await this.apiService.getData(url, method, headers).then(
         response => {
           debugger
           if (element && response !== undefined && response !== null) {
