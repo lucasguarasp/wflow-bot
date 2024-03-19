@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 // import axios from 'axios-observable';
 import axios from 'axios';
-import { environment } from '../../../enviroments/environment';
+import { environment } from '../../../environments/environment';
 
 
 
