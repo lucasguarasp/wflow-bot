@@ -42,6 +42,11 @@ export class ConfigComponentsComponent implements OnInit {
     this.filterData();
   }
 
+  updateParentForm(childFormValue: any) {
+    // Atualize o FormGroup pai com os valores do FormGroup filho
+    this.formGeral.patchValue(childFormValue);
+  }
+
   buildForms() {
     this.formGeral = this.fb.group({
       name: [''],
