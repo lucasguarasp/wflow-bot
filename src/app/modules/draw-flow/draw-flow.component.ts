@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Drawflow from 'drawflow';
 import { ConfigComponentsComponent } from '../../shared/components/modals/config-components/config-components.component';
@@ -48,11 +48,13 @@ export class DrawFlowComponent implements OnInit {
   // classComponents: any[];
   // nameComponents: any[];
 
+  isLightTheme = true;
+
   getIconClass(type: TypeComponent): string {
     return icon.get(type) || 'fa fa-pencil'; // Pode definir uma classe padrão se não houver correspondência
   }
 
-  constructor(private modalService: NgbModal, private sharedDataService: SharedDataService, private flowService: FlowService) {
+  constructor(private modalService: NgbModal, private sharedDataService: SharedDataService, private flowService: FlowService, private renderer: Renderer2, private el: ElementRef) {
     this.sharedDataService.getSelectedItemObservable().subscribe((item) => {
       if (this.selectedNodeId) {
         const id = this.selectedNodeId.slice(5);
@@ -485,6 +487,13 @@ export class DrawFlowComponent implements OnInit {
 
     const selectedNodeHtml = document.getElementById(this.selectedNodeId);
     selectedNodeHtml?.append(this.editDivHtml);
+  }
+
+  onThemeSwitchChange() {
+    console.log("trocou thema")
+    const htmlElement = document.querySelector('[data-bs-theme]')
+    this.renderer.setAttribute(htmlElement, 'data-bs-theme', this.isLightTheme ? 'dark' : 'light');
+    this.isLightTheme = !this.isLightTheme;
   }
 
 }
